@@ -10,6 +10,9 @@ for k=1:numbOfClass
 %     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
     class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
 end
+filename='class4class6'; % change to better expression....
+
+
 fuel_sim={'modify_class4_class6_both'};
 
 %% read modification ignition delay time 
@@ -35,7 +38,8 @@ end
 k = 2
 directory=[fuel_name{1},'_',pressure_text{k},'_','phi',num2str(equi),'_',date{1}];
 % location_rateParam = [currentloc,'\',mechanism{1},'\',fuel_name]
-location_rateParam=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{1}];
+% location_rateParam=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{1}];
+location_rateParam=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',filename];
 cd(location_rateParam)
 load rateParam.mat;
 
@@ -85,12 +89,13 @@ date = {'01_30_2017'};
 fuel_name = {'n_heptane'};
 directory=[fuel_name{1},'_',pressure_text{k},'_','phi',num2str(equi),'_',date{1}];
 for j = 1: size(Temp,1)
-    for k = 1: numbOfClass
+%     for k = 1: numbOfClass
 % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
-    location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
+%     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
+    location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',filename,'\',num2str(j)];
     time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
     time_modification(:,j)=time_struct_modification.table.data(:,10);
-    end
+%     end
     
 end
 
