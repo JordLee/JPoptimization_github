@@ -19,7 +19,8 @@ cd(pwd);
 %% Settings %%%%%%%%%%%%%%%%%%%%%%%%%%%
 fuel_name='n_heptane';
 mechanism='Ra_Reitz';
-class_numb =6;
+% class_numb =6;
+numbOfClass = 9;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 filename = [mechanism,'_','base.inp'];
@@ -68,8 +69,18 @@ rawCellColumns2=rawCellColumns;
 
 
 
-
+for class_numb = 1 : numbOfClass
 class_numb_text{1} = ['class' num2str(class_numb)];
+end
+
+
+classnumb=[4 6];
+numbOfClass = length(classnumb);
+class_numb_text = {};
+for k=1:numbOfClass
+%     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
+    class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
+end
 
 for variation_numb = 1:7;
 ModStart = 0;    
@@ -83,17 +94,11 @@ ModStart = 0;
               end  
 
              %% classes modification   
-            if class_numb == 6 & (strfind(rawCellColumns{i,j},'c7h15o2+o2=') == 1)... % n heptane erc
+             for k = 1: numbOfClass         
+                if strcmp(class_numb_text(k),'class6') & (strfind(rawCellColumns{i,j},'c7h15o2+o2=') == 1)... % n heptane erc
                        & isempty((strfind(rawCellColumns{i},'!')) == 0)& (ModStart == 1)...
-              | class_numb == 27 & (strfind(rawCellColumns{i,j},'C12OOH') == 1)... % n dodecane ske_361
-                     & (isempty(strfind(rawCellColumns{i,j},'O2=C12KET')) == 0)...
-                      & (isempty(strfind(rawCellColumns{i},'!')) == 1)& (ModStart == 1);      
-                   
-%             if class_numb == 2 & (strfind(rawCellColumns{i,j},'nc7h16+oh=') == 1)...
-%                      & isempty((strfind(rawCellColumns{i},'!')) == 0)& (ModStart == 1);
-%              if class_numb == 4 & (strfind(rawCellColumns{i,j},'nc7h16+o2=') == 1)...
-%                      & isempty((strfind(rawCellColumns{i},'!')) == 0)& (ModStart == 1)
-                  
+                   |(strcmp(class_numb_text(k),'class4') & (strfind(rawCellColumns{i,j},'nc7h16+o2=') == 1)...
+                         & isempty((strfind(rawCellColumns{i},'!')) == 0)& (ModStart == 1))
 %%
                   if variation_numb == 1 
                              rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb),'***','v_',num2str(variation_numb)];
@@ -140,11 +145,13 @@ ModStart = 0;
                              lsqfit(variation_numb+1,1) = str2num(rawCellColumns{i,2})*0.13;
                              lsqfit(variation_numb+1,2) = str2num(rawCellColumns{i,4})-2000;
                   end
-
+                end
              end
-         end 
+
+          end
+     end 
         
-    end
+    
     
 %% for future class determination
 %                  if  (strfind(rawCellColumns{i,j},'nc7h16+oh=') == 1) & isempty((strfind(rawCellColumns{i},'!')) == 0)& (ModStart == 1);
@@ -160,7 +167,7 @@ ModStart = 0;
 
 % save mech_ERC-MultiChem+Bio_Brakora2012_v1_test.mat rawCellColumns2
 % file_name=[mechanism,'_',fuel_name,'_','class',class_numb,'_','v_',num2str(variation_numb),'.inp'];
-file_name=[mechanism,'_',fuel_name,'_','class',num2str(class_numb),'_','v_',num2str(variation_numb),'.inp'];
+file_name=[mechanism,'_',fuel_name,'_','class',num2str(class_numb(1,:)),'_','v_',num2str(variation_numb),'.inp'];
 % fileID = fopen('mech_ERC-MultiChem+Bio_Brakora2012_v1_test.inp','w');
 fileID = fopen(file_name,'w');
 output = cell(size(rawCellColumns2,1),size(rawCellColumns2,2));
@@ -201,7 +208,7 @@ end
 rateParam.(class_numb_text{1})=lsqfit;
 save('rateParam.mat','rateParam'); 
 fclose(fileID);
-exit
+% exit
 %type mech_ERC-MultiChem+Bio_Brakora2012_v1_test.inp
 
 %% Clear temporary variables
