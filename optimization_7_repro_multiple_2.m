@@ -2,7 +2,7 @@ clear all
 % close all
 
 
-
+%test
 classnumb=[4 6];
 numbOfClass = length(classnumb);
 class_numb_text = {};
