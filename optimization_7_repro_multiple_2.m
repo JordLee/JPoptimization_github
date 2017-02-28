@@ -10,7 +10,7 @@ for k=1:numbOfClass
 %     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
     class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
 end
-fuel_sim={'modify_class4_class6_success'};
+fuel_sim={'modify_class4_class6_both'};
 
 %% read modification ignition delay time 
 % mechanism={'MFC'};
