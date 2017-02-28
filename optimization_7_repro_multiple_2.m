@@ -109,15 +109,15 @@ for j = 1 : size(Temp,1)
 %     coefs(k,:)=coeffvalues(sf);
 %     plot(sf,[A,E],log(time_current));
 %     zlim([4 9]);
-    totalM = [];
+%     totalM = [];
     for k = 1: numbOfClass
     time_current = time_modification.(class_numb_text{k})(:,j);
     A = rateParam.(class_numb_text{k})(:,1);
     E = rateParam.(class_numb_text{k})(:,2);
     M = [log(A) log(Temp_current)*ones(7,1) E log(A).*(E) log(A).*log(A) E.^2];
-    totalM = [totalM M];
+%     totalM = [totalM M];
     d = log(time_current);
-    coefs_inv = lsqlin(totalM,d);
+    coefs_inv = lsqlin(M,d);
     coefs_element = coefs_inv';
     
     
@@ -128,7 +128,7 @@ for j = 1 : size(Temp,1)
 %     coefs.(class_numb_text{n})(k,:)=coefs_element(1,6*n-5:6*n);
     coefs.(class_numb_text{k})(j,:)=coefs_element;
 %     coefsTotal =[coefsTotal coefs.(class_numb_text{k})(j,:)];
-    prediction.(class_numb_text{k}){:,j}=totalM*coefs_element'-d;
+    prediction.(class_numb_text{k}){:,j}=M*coefs_element'-d;
     end
     
     
