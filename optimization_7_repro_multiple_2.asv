@@ -96,11 +96,11 @@ end
 
 
 %%  coefficient
-for j = 1 : size(Temp,1)  
+for k = 1 : size(Temp,1)  
 % for k = 1 : 1
   
-    Temp_current = Temp(j);
-    
+    Temp_current = Temp(k);
+    time_current = time_modification(:,k);
 %     type = fittype({'log(x)','log(Temp_current)','y','log(x)*y','(log(x))^2','y^2'}...  % linear term3     
 %     ,'independent', {'x', 'y'},'dependent','z','problem','Temp_current');
 %  options=fitoptions('Method','LinearLeastSquares')
@@ -110,30 +110,26 @@ for j = 1 : size(Temp,1)
 %     plot(sf,[A,E],log(time_current));
 %     zlim([4 9]);
     totalM = [];
-    for k = 1: numbOfClass
-    time_current = time_modification.(class_numb_text{k})(:,j);
-    A = rateParam.(class_numb_text{k})(:,1);
-    E = rateParam.(class_numb_text{k})(:,2);
+    for n = 1: numbOfClass
+    A = rateParam.(class_numb_text{n})(:,1);
+    E = rateParam.(class_numb_text{n})(:,2);
     M = [log(A) log(Temp_current)*ones(7,1) E log(A).*(E) log(A).*log(A) E.^2];
     totalM = [totalM M];
-    d = log(time_current);
+    d = log(time_current.(class_numb_text{n}));
+    end
+    
     coefs_inv = lsqlin(totalM,d);
     coefs_element = coefs_inv';
+    coefsTotal = [];
     
-    
- 
-%     coefsTotal = [];
-    
-%     for n = 1: length(class_numb_text)
-%     coefs.(class_numb_text{n})(k,:)=coefs_element(1,6*n-5:6*n);
-    coefs.(class_numb_text{k})(j,:)=coefs_element;
-%     coefsTotal =[coefsTotal coefs.(class_numb_text{k})(j,:)];
-    prediction.(class_numb_text{k}){:,j}=totalM*coefs_element'-d;
+    for n = 1: length(class_numb_text)
+    coefs.(class_numb_text{n})(k,:)=coefs_element(1,6*n-5:6*n);
+    coefsTotal =[coefsTotal coefs.(class_numb_text{n})(k,:)];
     end
     
     
     
-   
+    prediction{:,k}=totalM*coefsTotal'-d;
     
 %     Model_igtime=@(x,y) coefs(k,1)*log(x)+coefs(k,2)*log(Temp_current)+coefs(k,3)*y...
 %     + coefs(k,4)*log(x)*y + coefs(k,5)*(log(x))^2+coefs(k,6)*y^2; % linear term3
