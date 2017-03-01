@@ -2,7 +2,7 @@ function differTotal = find_rate_weighting(X,coefs,Temp,numbOfClass,classnumb_te
 differTotal= 0;
 timeTotal =zeros(length(Temp),1) ;
 time = zeros(length(Temp),numbOfClass);
-time_weight = zeros(length(Temp),numbOfClass);
+time_weight_differ = zeros(length(Temp),numbOfClass);
 for j= 1: length(Temp)
 
      for i = 1: numbOfClass
@@ -19,16 +19,16 @@ for j= 1: length(Temp)
          +coefs.(classnumb_text{i})(j,3)*E+coefs.(classnumb_text{i})(j,4)*A*E...
          +coefs.(classnumb_text{i})(j,5)*(A)^2+coefs.(classnumb_text{i})(j,6)*(E)^2;
      
-     time_weight(j,i) = W*time(j,i);
+     time_weight_differ(j,i)= W*abs(log10(Target_data(j))-log10(exp(time(j,i))));
      
-     timeTotal(j)=time_weight(j,i)+timeTotal(j);
+     timeTotal(j)=time_weight_differ(j,i)+timeTotal(j); % sum up class
     
      
      
      end
      
-     differ(j) = abs(log10(numbOfClass*Target_data(j))-log10(exp(timeTotal(j))));        
-     differTotal = differ(j) + differTotal;
+           
+     differTotal = timeTotal(j) + differTotal; % sum up Temp
 end
 
     
