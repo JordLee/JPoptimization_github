@@ -57,8 +57,12 @@ addpath(currentloc)
 time_struct_target=read_ignition_delay(location_target,num_cases_target);
 Temp=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
 
+
 Target_data=time_struct_target.table.data(:,10);
 range = 13:20;
+
+Temp=flip(Temp);
+Target_data=flip(Target_data);
 Temp = Temp(range);
 Target_data = Target_data(range);
 
@@ -84,17 +88,20 @@ num_cases_modification= size(A,1);
 date = {'01_30_2017'};
 fuel_name = {'n_heptane'};
 directory=[fuel_name{1},'_',pressure_text{k},'_','phi',num2str(equi),'_',date{1}];
-for j = 1: size(Temp,1)
+for j = range
     for k = 1: numbOfClass
 % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
     time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
     time_modification.(class_numb_text{k})(:,j)=time_struct_modification.table.data(:,10);
+    temp_modification.(class_numb_text{k})(:,j)=time_struct_modification.table.data(:,6);
     end
     
 end
-
-
+for k = 1: numbOfClass
+    time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,range);
+    temp_modification.(class_numb_text{k})(:)=temp_modification.(class_numb_text{k})(:,range); 
+end
 %%  coefficient
 for j = 1 : size(Temp,1)  
 % for k = 1 : 1
