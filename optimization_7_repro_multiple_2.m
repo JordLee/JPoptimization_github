@@ -167,8 +167,8 @@ numberOftempPoints = size(te(:,1),1);
 %% objective function
 % ObjectiveFunction=ObjectiveFunction_array5(numberOftempPoints,numbOfClass,te,Temp,coefs);
 % ObjectiveFunction=ObjectiveFunction_array6(numberOftempPoints,numbOfClass,te,Temp,coefs,class_numb_text);
-ObjectiveFunction = @(X) find_rate_3(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
-
+% ObjectiveFunction = @(X) find_rate_3(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
+ObjectiveFunction = @(X) find_rate_weighting(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
 LB =[];
 UB =[];
 
@@ -177,17 +177,17 @@ if strcmp(mechanism{1},'Ra_Reitz') && ismember(4,classnumb)
 % LB =[0.706e+14*0.13 37904-2000 ];
 % LB =[0.706e+14*0.13 0 ];
 % UB =[0.706e+14*10 37904+2000];
-LB =[42360000000000*0.13 0 ];
-UB =[42360000000000*10 35904+2000];
+LB =[42360000000000*0.13 1 1];
+UB =[42360000000000*10 35904+2000 10];
 end
 
 % class6
 if strcmp(mechanism{1},'Ra_Reitz') && ismember(6,classnumb)
-LB =[LB 19955000000000*0.13 0];
-UB =[UB 19955000000000*10 16232.712+2000];
+LB =[LB 19955000000000*0.13 1 1];
+UB =[UB 19955000000000*10 16232.712+2000 10];
 end
 
-nvars=2*numbOfClass;
+nvars=3*numbOfClass;
 options=gaoptimset('PopulationSize',500);
 [result_ga,Fval,exitFlag,Output] = ga(ObjectiveFunction,nvars,[],[],[],[],LB,UB,[],options);
 [result_fmin,Fval,exitFlag,Output] = fmincon(ObjectiveFunction,result_ga,[],[],[],[],LB,UB);
