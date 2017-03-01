@@ -3,7 +3,7 @@ clear all
 
 
 %test
-classnumb=[4 6];
+classnumb=[6];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
@@ -100,7 +100,7 @@ for j = range
 end
 for k = 1: numbOfClass
     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,range);
-    temp_modification.(class_numb_text{k})(:)=temp_modification.(class_numb_text{k})(:,range); 
+    temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,range); 
 end
 %%  coefficient
 for j = 1 : size(Temp,1)  
