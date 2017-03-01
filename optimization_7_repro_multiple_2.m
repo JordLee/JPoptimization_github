@@ -65,8 +65,8 @@ Target_data=time_struct_target.table.data(:,10);
 
 Target_data = flip(Target_data);
 Temp = flip(Temp)
-range = 1:25;
-% range = 13:20;
+% range = 1:24;
+range = 13:20;
 Temp = Temp(range);
 Target_data = Target_data(range);
 
@@ -121,13 +121,28 @@ for k = 1 : size(Temp,1)
 %     plot(sf,[A,E],log(time_current));
 %     zlim([4 9]);
     totalM = [];
-    for n = 1: numbOfClass
-    A = rateParam.(class_numb_text{n})(:,1);
-    E = rateParam.(class_numb_text{n})(:,2);
+    %% weighting factor
+    
+    w_a=rateParam.(class_numb_text{1})(1,1)/rateParam.(class_numb_text{2})(1,1);
+    w_e=rateParam.(class_numb_text{1})(1,2)/rateParam.(class_numb_text{2})(1,2);
+    A = rateParam.(class_numb_text{1})(:,1);
+    E = rateParam.(class_numb_text{1})(:,2);
     M = [log(A) log(Temp_current)*ones(7,1) E log(A).*(E) log(A).*log(A) E.^2];
     totalM = [totalM M];
-
-    end
+    A = rateParam.(class_numb_text{1})(:,1);
+    E = rateParam.(class_numb_text{1})(:,2);
+    A = w_a*A;
+    E = w_e*E;
+    M = [log(A) log(Temp_current)*ones(7,1) E log(A).*(E) log(A).*log(A) E.^2];
+    totalM = [totalM M];
+    %%
+%     for n = 1: numbOfClass
+%     A = rateParam.(class_numb_text{n})(:,1);
+%     E = rateParam.(class_numb_text{n})(:,2);
+%     M = [log(A) log(Temp_current)*ones(7,1) E log(A).*(E) log(A).*log(A) E.^2];
+%     totalM = [totalM M];
+% 
+%     end
     d = log(time_current);
     coefs_inv = lsqlin(totalM,d);
     coefs_element = coefs_inv';
@@ -199,6 +214,9 @@ error=ObjectiveFunction(X)
 for i = 1 : numbOfClass
 final_result.(class_numb_text{i})= [result_ga(1,2*i-1:2*i); result_fmin(1,2*i-1:2*i)];
 end
+
+% final_result.(class_numb_text{2})(1)= 1/w_a*final_result.(class_numb_text{2})(1);
+% final_result.(class_numb_text{2})(2)= 1/w_e*final_result.(class_numb_text{2})(2);
 
 location_save=[currentloc,'\',mechanism{1},'\',directory];
 cd(location_save)

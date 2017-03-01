@@ -62,6 +62,10 @@ time_struct_target=read_ignition_delay(location_target,num_cases_target);
 Temp=time_struct_target.table.data(:,6); % do we have to include temp?
 
 Target_data=time_struct_target.table.data(:,10);
+
+Target_data = flip(Target_data);
+Temp = flip(Temp)
+% range = 1:24;
 range = 13:20;
 Temp = Temp(range);
 Target_data = Target_data(range);
@@ -88,18 +92,19 @@ num_cases_modification= size(A,1);
 date = {'01_30_2017'};
 fuel_name = {'n_heptane'};
 directory=[fuel_name{1},'_',pressure_text{k},'_','phi',num2str(equi),'_',date{1}];
-for j = 1: size(Temp,1)
+for j = range
 %     for k = 1: numbOfClass
 % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
 %     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',filename,'\',num2str(j)];
     time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
-    temp_modification(:,j)=time_struct_modification.table.data(:,6)
+    temp_modification(:,j)=time_struct_modification.table.data(:,6);
     time_modification(:,j)=time_struct_modification.table.data(:,10);
 %     end
     
 end
-
+temp_modification = temp_modification(:,range);
+time_modification = time_modification(:,range);
 
 %%  coefficient
 for k = 1 : size(Temp,1)  
@@ -116,13 +121,28 @@ for k = 1 : size(Temp,1)
 %     plot(sf,[A,E],log(time_current));
 %     zlim([4 9]);
     totalM = [];
-    for n = 1: numbOfClass
-    A = rateParam.(class_numb_text{n})(:,1);
-    E = rateParam.(class_numb_text{n})(:,2);
+    %% weighting factor
+    
+    w_a=rateParam.(class_numb_text{1})(1,1)/rateParam.(class_numb_text{2})(1,1);
+    w_e=rateParam.(class_numb_text{1})(1,2)/rateParam.(class_numb_text{2})(1,2);
+    A = rateParam.(class_numb_text{1})(:,1);
+    E = rateParam.(class_numb_text{1})(:,2);
     M = [log(A) log(Temp_current)*ones(7,1) E log(A).*(E) log(A).*log(A) E.^2];
     totalM = [totalM M];
-
-    end
+    A = rateParam.(class_numb_text{1})(:,1);
+    E = rateParam.(class_numb_text{1})(:,2);
+    A = w_a*A;
+    E = w_e*E;
+    M = [log(A) log(Temp_current)*ones(7,1) E log(A).*(E) log(A).*log(A) E.^2];
+    totalM = [totalM M];
+    %%
+%     for n = 1: numbOfClass
+%     A = rateParam.(class_numb_text{n})(:,1);
+%     E = rateParam.(class_numb_text{n})(:,2);
+%     M = [log(A) log(Temp_current)*ones(7,1) E log(A).*(E) log(A).*log(A) E.^2];
+%     totalM = [totalM M];
+% 
+%     end
     d = log(time_current);
     coefs_inv = lsqlin(totalM,d);
     coefs_element = coefs_inv';
@@ -194,6 +214,8 @@ error=ObjectiveFunction(X)
 for i = 1 : numbOfClass
 final_result.(class_numb_text{i})= [result_ga(1,2*i-1:2*i); result_fmin(1,2*i-1:2*i)];
 end
+
+
 
 location_save=[currentloc,'\',mechanism{1},'\',directory];
 cd(location_save)
