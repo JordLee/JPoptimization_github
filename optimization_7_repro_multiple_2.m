@@ -3,7 +3,7 @@ clear all
 
 
 %test
-classnumb=[6];
+classnumb=[4 6];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
