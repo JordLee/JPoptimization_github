@@ -3,14 +3,14 @@ clear all
 
 
 %test
-classnumb=[4 6];
+classnumb=[2 4 6];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
 %     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
     class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
 end
-fuel_sim={'modify_class4_class6_success'};
+fuel_sim={'modify_class2_class4_class6'};
 
 %% read modification ignition delay time 
 % mechanism={'MFC'};
@@ -59,7 +59,7 @@ Temp=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
 
 
 Target_data=time_struct_target.table.data(:,10);
-range = 13:24;
+range = 12:22;
 
 Temp=flip(Temp);
 Target_data=flip(Target_data);
@@ -171,14 +171,21 @@ numberOftempPoints = size(te(:,1),1);
 ObjectiveFunction = @(X) find_rate_weighting(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
 LB =[];
 UB =[];
-
+% class2
+if strcmp(mechanism{1},'Ra_Reitz') && ismember(2,classnumb)
+% LB =[0.706e+14*0.13 37904-2000 ];
+% LB =[0.706e+14*0.13 0 ];
+% UB =[0.706e+14*10 37904+2000];
+LB =[LB 0.478e+10*0.13 0 ];
+UB =[UB 0.478e+10*10 690+2000 ];
+end
 % class4
 if strcmp(mechanism{1},'Ra_Reitz') && ismember(4,classnumb)
 % LB =[0.706e+14*0.13 37904-2000 ];
 % LB =[0.706e+14*0.13 0 ];
 % UB =[0.706e+14*10 37904+2000];
-LB =[42360000000000*0.13 0 ];
-UB =[42360000000000*10 35904+2000 ];
+LB =[LB 42360000000000*0.13 0 ];
+UB =[UB 42360000000000*10 35904+2000 ];
 end
 
 % class6
