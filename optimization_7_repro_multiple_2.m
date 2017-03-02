@@ -10,7 +10,7 @@ for k=1:numbOfClass
 %     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
     class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
 end
-fuel_sim={'modify_class2_class4_class6'};
+fuel_sim={'modify_class2_class4_class6_moderate'};
 
 %% read modification ignition delay time 
 % mechanism={'MFC'};
@@ -59,8 +59,9 @@ Temp=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
 
 
 Target_data=time_struct_target.table.data(:,10);
-range = 12:22;
-
+% range = 12:22; % works slightly well ??
+% range = 12:25; % works slightly as well..
+range = 1:25;
 Temp=flip(Temp);
 Target_data=flip(Target_data);
 Temp = Temp(range);
@@ -176,22 +177,29 @@ if strcmp(mechanism{1},'Ra_Reitz') && ismember(2,classnumb)
 % LB =[0.706e+14*0.13 37904-2000 ];
 % LB =[0.706e+14*0.13 0 ];
 % UB =[0.706e+14*10 37904+2000];
-LB =[LB 0.478e+10*0.13 0 ];
-UB =[UB 0.478e+10*10 690+2000 ];
+% LB =[LB 9.5600e+09*0.13 0 ];
+% UB =[UB 9.5600e+09*10 590+2000 ];
+LB =[LB rateParam.('class2')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class2')(1,1)*10 rateParam.('class2')(1,2)+2000 ];
+
 end
 % class4
 if strcmp(mechanism{1},'Ra_Reitz') && ismember(4,classnumb)
 % LB =[0.706e+14*0.13 37904-2000 ];
 % LB =[0.706e+14*0.13 0 ];
 % UB =[0.706e+14*10 37904+2000];
-LB =[LB 42360000000000*0.13 0 ];
-UB =[UB 42360000000000*10 35904+2000 ];
+% LB =[LB 42360000000000*0.13 0 ];
+% UB =[UB 42360000000000*10 35904+2000 ];
+LB =[LB rateParam.('class4')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class4')(1,1)*10 rateParam.('class4')(1,2)+2000 ];
 end
 
 % class6
 if strcmp(mechanism{1},'Ra_Reitz') && ismember(6,classnumb)
-LB =[LB 19955000000000*0.13 0 ];
-UB =[UB 19955000000000*10 16232.712+2000 ];
+% LB =[LB 19955000000000*0.13 0 ];
+% UB =[UB 19955000000000*10 16232.712+2000 ];
+LB =[LB rateParam.('class6')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class6')(1,1)*10 rateParam.('class6')(1,2)+2000 ];
 end
 
 nvars=2*numbOfClass;
