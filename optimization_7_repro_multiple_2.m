@@ -197,7 +197,7 @@ X = result_ga;
 error=ObjectiveFunction(X)
 
 for i = 1 : numbOfClass
-final_result.(class_numb_text{i})= [result_ga(1,2*i-1:2*i); result_fmin(1,2*i-1:2*i)];
+final_result.(class_numb_text{i})= [result_ga(1,3*i-2:3*i-1); result_fmin(1,3*i-2:3*i-1)];
 end
 % for i = 1 : numbOfClass
 % final_result.(class_numb_text{i})= [result_ga(1,2*i-1:2*i)];

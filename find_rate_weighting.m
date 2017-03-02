@@ -9,15 +9,15 @@ for j= 1: length(Temp)
     
      A=X(3*i-2);
      E=X(3*i-1);
-     W=X(3*i);
-     
+%      W=X(3*i);
+     W =1;
 %      time(j,i)=coefs.(classnumb_text{i})(j,1)*log(X(2*i-1))+coefs.(classnumb_text{i})(j,2)*log(Temp(j))...
 %          +coefs.(classnumb_text{i})(j,3)*X(2*i)+coefs.(classnumb_text{i})(j,4)*log(X(2*i-1))*X(2*i)...
 %          +coefs.(classnumb_text{i})(j,5)*(log(X(2*i-1)))^2+coefs.(classnumb_text{i})(j,6)*(X(2*i))^2;
      
-     time(j,i)=coefs.(classnumb_text{i})(j,1)*A+coefs.(classnumb_text{i})(j,2)*log(Temp(j))...
-         +coefs.(classnumb_text{i})(j,3)*E+coefs.(classnumb_text{i})(j,4)*A*E...
-         +coefs.(classnumb_text{i})(j,5)*(A)^2+coefs.(classnumb_text{i})(j,6)*(E)^2;
+     time(j,i)=coefs.(classnumb_text{i})(j,1)*log(A)+coefs.(classnumb_text{i})(j,2)*log(Temp(j))...
+         +coefs.(classnumb_text{i})(j,3)*E+coefs.(classnumb_text{i})(j,4)*log(A)*E...
+         +coefs.(classnumb_text{i})(j,5)*(log(A))^2+coefs.(classnumb_text{i})(j,6)*(E)^2;
      
      time_weight_differ(j,i)= W*abs(log10(Target_data(j))-log10(exp(time(j,i))));
      
