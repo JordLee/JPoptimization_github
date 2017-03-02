@@ -7,8 +7,8 @@ for j= 1: length(Temp)
 
      for i = 1: numbOfClass
     
-     A=X(3*i-2);
-     E=X(3*i-1);
+     A=X(2*i-1);
+     E=X(2*i);
 %      W=X(3*i);
      W =1;
 %      time(j,i)=coefs.(classnumb_text{i})(j,1)*log(X(2*i-1))+coefs.(classnumb_text{i})(j,2)*log(Temp(j))...
@@ -23,7 +23,7 @@ for j= 1: length(Temp)
      
      timeTotal(j)=time_weight_differ(j,i)+timeTotal(j); % sum up class
     
-     X(3*i)
+%      X(3*i)
      
      end
      

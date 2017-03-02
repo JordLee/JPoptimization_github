@@ -59,7 +59,7 @@ Temp=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
 
 
 Target_data=time_struct_target.table.data(:,10);
-range = 13:20;
+range = 13:24;
 
 Temp=flip(Temp);
 Target_data=flip(Target_data);
@@ -177,17 +177,17 @@ if strcmp(mechanism{1},'Ra_Reitz') && ismember(4,classnumb)
 % LB =[0.706e+14*0.13 37904-2000 ];
 % LB =[0.706e+14*0.13 0 ];
 % UB =[0.706e+14*10 37904+2000];
-LB =[42360000000000*0.13 0 0];
-UB =[42360000000000*10 35904+2000 100];
+LB =[42360000000000*0.13 0 ];
+UB =[42360000000000*10 35904+2000 ];
 end
 
 % class6
 if strcmp(mechanism{1},'Ra_Reitz') && ismember(6,classnumb)
-LB =[LB 19955000000000*0.13 0 0];
-UB =[UB 19955000000000*10 16232.712+2000 100];
+LB =[LB 19955000000000*0.13 0 ];
+UB =[UB 19955000000000*10 16232.712+2000 ];
 end
 
-nvars=3*numbOfClass;
+nvars=2*numbOfClass;
 options=gaoptimset('PopulationSize',500);
 [result_ga,Fval,exitFlag,Output] = ga(ObjectiveFunction,nvars,[],[],[],[],LB,UB,[],options);
 [result_fmin,Fval,exitFlag,Output] = fmincon(ObjectiveFunction,result_ga,[],[],[],[],LB,UB);
@@ -197,7 +197,7 @@ X = result_ga;
 error=ObjectiveFunction(X)
 
 for i = 1 : numbOfClass
-final_result.(class_numb_text{i})= [result_ga(1,3*i-2:3*i); result_fmin(1,3*i-2:3*i)];
+final_result.(class_numb_text{i})= [result_ga(1,2*i-1:2*i); result_fmin(1,2*i-1:2*i)];
 end
 % for i = 1 : numbOfClass
 % final_result.(class_numb_text{i})= [result_ga(1,2*i-1:2*i)];

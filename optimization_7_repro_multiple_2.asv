@@ -57,8 +57,12 @@ addpath(currentloc)
 time_struct_target=read_ignition_delay(location_target,num_cases_target);
 Temp=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
 
+
 Target_data=time_struct_target.table.data(:,10);
 range = 13:20;
+
+Temp=flip(Temp);
+Target_data=flip(Target_data);
 Temp = Temp(range);
 Target_data = Target_data(range);
 
@@ -84,23 +88,26 @@ num_cases_modification= size(A,1);
 date = {'01_30_2017'};
 fuel_name = {'n_heptane'};
 directory=[fuel_name{1},'_',pressure_text{k},'_','phi',num2str(equi),'_',date{1}];
-for j = 1: size(Temp,1)
+for j = range
     for k = 1: numbOfClass
 % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
     time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
     time_modification.(class_numb_text{k})(:,j)=time_struct_modification.table.data(:,10);
+    temp_modification.(class_numb_text{k})(:,j)=time_struct_modification.table.data(:,6);
     end
     
 end
-
-
+for k = 1: numbOfClass
+    time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,range);
+    temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,range); 
+end
 %%  coefficient
-for k = 1 : size(Temp,1)  
+for j = 1 : size(Temp,1)  
 % for k = 1 : 1
   
-    Temp_current = Temp(k);
-    time_current = time_modification(:,k);
+    Temp_current = Temp(j);
+    
 %     type = fittype({'log(x)','log(Temp_current)','y','log(x)*y','(log(x))^2','y^2'}...  % linear term3     
 %     ,'independent', {'x', 'y'},'dependent','z','problem','Temp_current');
 %  options=fitoptions('Method','LinearLeastSquares')
@@ -109,27 +116,31 @@ for k = 1 : size(Temp,1)
 %     coefs(k,:)=coeffvalues(sf);
 %     plot(sf,[A,E],log(time_current));
 %     zlim([4 9]);
-    totalM = [];
-    for n = 1: numbOfClass
-    A = rateParam.(class_numb_text{n})(:,1);
-    E = rateParam.(class_numb_text{n})(:,2);
+%     totalM = [];
+    for k = 1: numbOfClass
+    time_current = time_modification.(class_numb_text{k})(:,j);
+    A = rateParam.(class_numb_text{k})(:,1);
+    E = rateParam.(class_numb_text{k})(:,2);
     M = [log(A) log(Temp_current)*ones(7,1) E log(A).*(E) log(A).*log(A) E.^2];
-    totalM = [totalM M];
-    d = log(time_current.(class_numb_text{n}));
-    end
-    
-    coefs_inv = lsqlin(totalM,d);
+%     totalM = [totalM M];
+    d = log(time_current);
+    coefs_inv = lsqlin(M,d);
     coefs_element = coefs_inv';
-    coefsTotal = [];
     
-    for n = 1: length(class_numb_text)
-    coefs.(class_numb_text{n})(k,:)=coefs_element(1,6*n-5:6*n);
-    coefsTotal =[coefsTotal coefs.(class_numb_text{n})(k,:)];
+    
+ 
+%     coefsTotal = [];
+    
+%     for n = 1: length(class_numb_text)
+%     coefs.(class_numb_text{n})(k,:)=coefs_element(1,6*n-5:6*n);
+    coefs.(class_numb_text{k})(j,:)=coefs_element;
+%     coefsTotal =[coefsTotal coefs.(class_numb_text{k})(j,:)];
+    prediction.(class_numb_text{k}){:,j}=M*coefs_element'-d;
     end
     
     
     
-    prediction{:,k}=totalM*coefsTotal'-d;
+   
     
 %     Model_igtime=@(x,y) coefs(k,1)*log(x)+coefs(k,2)*log(Temp_current)+coefs(k,3)*y...
 %     + coefs(k,4)*log(x)*y + coefs(k,5)*(log(x))^2+coefs(k,6)*y^2; % linear term3
@@ -156,8 +167,8 @@ numberOftempPoints = size(te(:,1),1);
 %% objective function
 % ObjectiveFunction=ObjectiveFunction_array5(numberOftempPoints,numbOfClass,te,Temp,coefs);
 % ObjectiveFunction=ObjectiveFunction_array6(numberOftempPoints,numbOfClass,te,Temp,coefs,class_numb_text);
-ObjectiveFunction = @(X) find_rate_3(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
-
+% ObjectiveFunction = @(X) find_rate_3(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
+ObjectiveFunction = @(X) find_rate_weighting(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
 LB =[];
 UB =[];
 
@@ -167,13 +178,13 @@ if strcmp(mechanism{1},'Ra_Reitz') && ismember(4,classnumb)
 % LB =[0.706e+14*0.13 0 ];
 % UB =[0.706e+14*10 37904+2000];
 LB =[42360000000000*0.13 0 ];
-UB =[42360000000000*10 35904+2000];
+UB =[42360000000000*10 35904+2000 ];
 end
 
 % class6
 if strcmp(mechanism{1},'Ra_Reitz') && ismember(6,classnumb)
-LB =[LB 19955000000000*0.13 0];
-UB =[UB 19955000000000*10 16232.712+2000];
+LB =[LB 19955000000000*0.13 0 ];
+UB =[UB 19955000000000*10 16232.712+2000 ];
 end
 
 nvars=2*numbOfClass;
@@ -186,9 +197,11 @@ X = result_ga;
 error=ObjectiveFunction(X)
 
 for i = 1 : numbOfClass
-final_result.(class_numb_text{i})= [result_ga(1,2*i-1:2*i); result_fmin(1,2*i-1:2*i)];
+final_result.(class_numb_text{i})= [result_ga(1,2*i-1:2*i); result_fmin(1,2*i-2:3*i)];
 end
-
+% for i = 1 : numbOfClass
+% final_result.(class_numb_text{i})= [result_ga(1,2*i-1:2*i)];
+% end
 location_save=[currentloc,'\',mechanism{1},'\',directory];
 cd(location_save)
 
