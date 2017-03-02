@@ -23,7 +23,7 @@ for j= 1: length(Temp)
      
      timeTotal(j)=time_weight_differ(j,i)+timeTotal(j); % sum up class
     
-     
+     X(3*i)
      
      end
      
