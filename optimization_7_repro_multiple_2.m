@@ -1,25 +1,26 @@
-clear all
-% close all
+% clear all
+%%
+%sensitivity analays and pick classnumb for certain range
+
+% classnumb=[2 4 6];
 
 
-%test
-classnumb=[2 4 6];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
 %     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
     class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
 end
-fuel_sim={'modify_class2_class4_class6_moderate'};
-
-%% read modification ignition delay time 
-% mechanism={'MFC'};
-mechanism={'Ra_Reitz'};
-% currentloc = pwd;
-date = {'01_30_2017'};
-% fuel_name = {'n_dodecane'};
-fuel_name = {'n_heptane'};
-equi=1;
+% fuel_sim={'modify_class2_class4_class6_moderate'};
+% 
+% %% read modification ignition delay time 
+% % mechanism={'MFC'};
+% mechanism={'Ra_Reitz'};
+% % currentloc = pwd;
+% date = {'01_30_2017'};
+% % fuel_name = {'n_dodecane'};
+% fuel_name = {'n_heptane'};
+% equi=1;
 
 currentloc = 'C:\Users\unghee\Dropbox\post_process';
 
@@ -27,12 +28,14 @@ currentloc = 'C:\Users\unghee\Dropbox\post_process';
 
 
 
-pressure=[20 40];
+% pressure=[20 40];
 for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];
 
 end
-k = 2
+% k = 2
+
+
 directory=[fuel_name{1},'_',pressure_text{k},'_','phi',num2str(equi),'_',date{1}];
 % location_rateParam = [currentloc,'\',mechanism{1},'\',fuel_name]
 location_rateParam=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{1}];
@@ -61,7 +64,7 @@ Temp=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
 Target_data=time_struct_target.table.data(:,10);
 % range = 12:22; % works slightly well ??
 % range = 12:25; % works slightly as well..
-range = 1:25;
+% range = 1:25;
 Temp=flip(Temp);
 Target_data=flip(Target_data);
 Temp = Temp(range);
@@ -70,7 +73,7 @@ Target_data = Target_data(range);
 cd ../../..
 
 
-pressure=[20 40];
+% pressure=[20 40];
 for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];
 
