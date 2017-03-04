@@ -10,7 +10,7 @@ for k=1:numbOfClass
 %     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
     class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
 end
-fuel_sim={'modify_class6_time3'};
+fuel_sim={'modify_class6_time0.1'};
 
 %% read modification ignition delay time 
 % mechanism={'MFC'};
@@ -60,9 +60,9 @@ Temp1=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
 
 
 Target_data1=time_struct_target.table.data(:,10);
-% range = 12:22; % works slightly well ??
+range = 12:22; % works slightly well ??
 % range = 12:25; % works slightly as well..
-range = 1:25;
+% range = 1:25;
 Temp1=flip(Temp1);
 Target_data1=flip(Target_data1);
 Temp1 = Temp1(range);
