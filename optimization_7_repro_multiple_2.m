@@ -1,21 +1,17 @@
 clear all
 % close all
 
-
-%test
-classnumb=[6];
+classnumb=[2 4 6];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
-%     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
     class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
 end
-fuel_sim={'modify_class6_time3'};
+fuel_sim={'modify_class2_class4_class6_moderate'};
 
 %% read modification ignition delay time 
 % mechanism={'MFC'};
 mechanism={'Ra_Reitz'};
-% currentloc = pwd;
 date = {'01_30_2017'};
 % fuel_name = {'n_dodecane'};
 fuel_name = {'n_heptane'};
@@ -30,13 +26,12 @@ for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];
 
 end
-m = 2
+m = 2;
 directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-% location_rateParam = [currentloc,'\',mechanism{1},'\',fuel_name]
 location_rateParam=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{1}];
 cd(location_rateParam)
 load rateParam.mat;
-
+clear m;
 %% exp data
 % load rateParam.mat;
 
@@ -157,27 +152,21 @@ for j = 1 : size(Temp,1)
     coefs_element = coefs_inv';
     
     
- 
-%     coefsTotal = [];
-    
-%     for n = 1: length(class_numb_text)
-%     coefs.(class_numb_text{n})(k,:)=coefs_element(1,6*n-5:6*n);
+
     coefs.(class_numb_text{k})(j,:)=coefs_element;
-%     coefsTotal =[coefsTotal coefs.(class_numb_text{k})(j,:)];
+
     prediction.(class_numb_text{k}){:,j}=M*coefs_element'-d;
     end
     
     
 end
 
-% coefs=coefs.class4;
+
 
 %% OPTIMIZER
 
 % Target Temp value
-
 % te(:,1) = Target_data(:,3);
-
 % te(:,1) = Target_data;
 numberOftempPoints = size(Target_data,1);
 %% objective function
