@@ -137,9 +137,14 @@ clear legend_text
 % legend_text{2}=['ERC',pressure_text{k},'target(original)'];
 % legend_text{3}=['ERC',pressure_text{k},'after optimize'];
 
-legend_text{1}=['MFC',pressure_text{k},'beforeoptimize'];
-legend_text{2}=['Shen,Vasu',pressure_text{k},'target'];
-legend_text{3}=['MFC',pressure_text{k},'after optimize'];
+legend_text{1}=['MFC ',pressure_text{k},', ','beforeoptimize'];
+    if strcmp(pressure_text{k},'P20atm')
+        legend_text{2}=['Vasu, ',pressure_text{k},', ','target'];
+    else
+        legend_text{2}=['Shen, ',pressure_text{k},', ','target'];
+    end
+    
+legend_text{3}=['MFC ',pressure_text{k},', after optimize'];
 
 % load('simulation_result_beforeoptimize_dummy_class2_class4_class6_moderate_20atm_phi_1.mat')
 % fuel_sim={'beforeoptimize_dummy_class2_class4_class6_moderate'};
@@ -195,7 +200,7 @@ legend_text{3}=['MFC',pressure_text{k},'after optimize'];
     
     semilogy(sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).table.data(:,6),...
     sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).table.data(:,10),...
-    'go','markersize',marker_size)
+    'b','markersize',marker_size)
     %   ,sim_line{j},  'linewidth',line_width)
 % legend_text{end+1}=[mechanism{i},'_',fuel_sim{j},'_','40atm'];
     
@@ -209,8 +214,8 @@ legend_text{3}=['MFC',pressure_text{k},'after optimize'];
     % axis([0.7 1.6 20 40000])
     % clear legend_text
     annotation(h3,'textbox',[0.413 0.38 0.279 0.05],...
-    'String',{'n-heptane',...
-     '/Air','class2_class4_class6_moderate_SUCCESS', '\phi=1'},...
+    'String',{'n-dodecane',...
+     '/Air','one class', '\phi=1'},...
     'FontSize',13,...
     'FontName','Arial',...
     'FitBoxToText','off',...

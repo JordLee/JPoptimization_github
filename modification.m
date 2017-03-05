@@ -20,7 +20,7 @@ cd(pwd);
 fuel_name='n_dodecane';
 mechanism='MFC';
 % class_numb =6;
-class_numb = [27];
+class_numb = [15 26 27];
 numbOfClass = length(class_numb);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %filename = [mechanism,'_',fuel_name,'_','class6.inp'];
@@ -72,7 +72,7 @@ locationClass = [A B];
 for k = 1 : numbOfClass
 
     rawCellColumns2=rawCellColumns;
-    class_numb_text{1} = ['class' num2str(class_numb)];
+    class_numb_text{k} = ['class' num2str(class_numb(k))];
 
     for variation_numb = 1:7;
     ModStart = 0;    
@@ -105,44 +105,50 @@ for k = 1 : numbOfClass
 %                      |(class_numb == 9 & (strfind(rawCellColumns{i,j},'c7h15-2=') == 1)...
 %                          & isempty((strfind(rawCellColumns{i},'!')) == 0)& (ModStart == 1))...    
                          
-                   if  class_numb(k) == 27 & (strfind(rawCellColumns{i,j},'C12OOH') == 1)... % n dodecane ske_361
-                     & (isempty(strfind(rawCellColumns{i,j},'O2=C12KET')) == 0)...
-                      & (isempty(strfind(rawCellColumns{i},'!')) == 1)& (ModStart == 1);  
+                 if  class_numb(k) == 27 & (strfind(rawCellColumns{i,j},'C12OOH') ~= 0)... % n dodecane ske_361
+                         & (isempty(strfind(rawCellColumns{i,j},'O2=C12KET')) == 0)...
+                         & (isempty(strfind(rawCellColumns{i},'!')) == 1)& (ModStart == 1)...                      
+                     |class_numb(k) == 26 & (strfind(rawCellColumns{i,j},'C12OOH') ~= 0)... 
+                         & (isempty(strfind(rawCellColumns{i,j},'O2=C12OOH')) == 0)...
+                         & (isempty(strfind(rawCellColumns{i},'!')) == 1)& (ModStart == 1)...
+                     |class_numb(k) == 15 & (strfind(rawCellColumns{i,j},'C12H25O2') ~= 0)... 
+                         & (isempty(strfind(rawCellColumns{i,j},'=C12OOH')) == 0)...
+                         & (isempty(strfind(rawCellColumns{i},'!')) == 1)& (ModStart == 1)...                                           
+                      
 %%
                       if variation_numb == 1 
-                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb),'***','v_',num2str(variation_numb)];
+                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
                              rawCellColumns2{i,2} = str2num(rawCellColumns{i,2});  % same
                              lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2});
                              lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4});
 %                              lsqfit(variation_numb+1,1) = str2num(rawCellColumns{i,2});
 %                              lsqfit(variation_numb+1,2) = str2num(rawCellColumns{i,4});
                       elseif variation_numb == 2 
-                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb),'***','v_',num2str(variation_numb)];
+                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
                              rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*2;  % A*2
                              lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*2;
                              lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4});
 %                              lsqfit(variation_numb+1,1) = str2num(rawCellColumns{i,2})*2;
 %                              lsqfit(variation_numb+1,2) = str2num(rawCellColumns{i,4});
                       elseif variation_numb == 3
-                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb),'***','v_',num2str(variation_numb)];
+                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
                              rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*0.5; % A*0.5
                              lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*0.5;
                              lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4});
                       elseif variation_numb == 4
-                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb),'***','v_',num2str(variation_numb)];
+                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
                              rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*7.5; % A>>1, A*7.5
                              rawCellColumns2{i,4} = str2num(rawCellColumns{i,4})+2000; % E+2000 
                              lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*7.5;
                              lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4})+2000;
                       elseif variation_numb == 5
-                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb),'***','v_',num2str(variation_numb)];
+                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
                              rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*1.6;% A>1 
                              rawCellColumns2{i,4} = str2num(rawCellColumns{i,4})+2000; % E+2000
                              lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*1.6;% A>1 
-                             lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4})+2000; % E+2000
-                             
+                             lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4})+2000; % E+2000                          
                       elseif variation_numb == 6
-                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb),'***','v_',num2str(variation_numb)];
+                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
                              rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*0.6; % A<1  
                              lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*0.6;
                              if str2num(rawCellColumns{i,4})-2000>0;
@@ -153,7 +159,7 @@ for k = 1 : numbOfClass
                                 lsqfit(variation_numb,2) = 0;
                              end           
                       elseif variation_numb == 7
-                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb),'***','v_',num2str(variation_numb)];
+                             rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
                              rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*0.13; % A<<1  
                              lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*0.13; 
                              if str2num(rawCellColumns{i,4})-2000>0;
@@ -169,7 +175,7 @@ for k = 1 : numbOfClass
 %%saving files
                       % save mech_ERC-MultiChem+Bio_Brakora2012_v1_test.mat rawCellColumns2
                       % file_name=[mechanism,'_',fuel_name,'_','class',class_numb,'_','v_',num2str(variation_numb),'.inp'];
-                        file_name=[mechanism,'_',fuel_name,'_','class',num2str(class_numb),'_','v_',num2str(variation_numb),'.inp'];
+                        file_name=[mechanism,'_',fuel_name,'_','class',num2str(class_numb(k)),'_','v_',num2str(variation_numb),'.inp'];
                         % fileID = fopen('mech_ERC-MultiChem+Bio_Brakora2012_v1_test.inp','w');
                         fileID = fopen(file_name,'w');
                         output = cell(size(rawCellColumns2,1),size(rawCellColumns2,2));
@@ -220,7 +226,7 @@ for k = 1 : numbOfClass
     
     end
 %     clearvars filename delimiter formatSpec fileID dataArray ans raw col numericData rawCellColumns2 rawNumericColumns R;
-    rateParam.(class_numb_text{1})=lsqfit;
+    rateParam.(class_numb_text{k})=lsqfit;
     save('rateParam.mat','rateParam'); 
     clear rawCellColumns2;
 end
@@ -230,7 +236,7 @@ end
 % rateParam=struct(field);
 
 fclose(fileID);
-exit
+% exit
 %type mech_ERC-MultiChem+Bio_Brakora2012_v1_test.inp
 
 %% Clear temporary variables
