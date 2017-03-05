@@ -1,20 +1,20 @@
 clear all
 % close all
 
-classnumb=[2 4 6];
+classnumb=[27];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
     class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
 end
-fuel_sim={'modify_class2_class4_class6_moderate'};
+fuel_sim={'modify'};
 
 %% read modification ignition delay time 
 % mechanism={'MFC'};
-mechanism={'Ra_Reitz'};
-date = {'01_30_2017'};
-% fuel_name = {'n_dodecane'};
-fuel_name = {'n_heptane'};
+mechanism={'MFC'};
+date = {'03_04_2017'};
+fuel_name = {'n_dodecane'};
+% fuel_name = {'n_heptane'};
 equi=1;
 
 currentloc = 'C:\Users\unghee\Dropbox\post_process';
@@ -35,8 +35,30 @@ clear m;
 %% exp data
 % load rateParam.mat;
 
-% real_fuel_ID;
-% pure_component_ID;
+real_fuel_ID;
+pure_component_ID;
+Target_fuel1 = Vasu_dode_20atm;
+Target_data1=Target_fuel1(:,5);
+Temp1 = Target_fuel1(:,2);
+numbOftarget1 =length(Target_data1);
+% Temp1=flip(Temp1);
+% Target_data1=flip(Target_data1);
+
+Target_fuel2 = Shen_dode_40atm;
+Target_data2=Target_fuel2(:,5);
+Temp2 = Target_fuel2(:,2);
+numbOftarget2 =length(Target_data2);
+% Temp2=flip(Temp2);
+% Target_data2=flip(Target_data2);
+
+
+Temp = [Temp1; Temp2];
+Target_data = [Target_data1; Target_data2];
+% Temp = Temp1;
+% Target_data = Target_data1;
+
+cd ../../..
+
 % Target_data = Shen_hep_40atm;
 % % Target_data = Vasu_40atm;
 % % Target_data = Wang_40atm;
@@ -44,63 +66,64 @@ clear m;
 % Temp_un = Target_data(:,1);
 %% dummy target
 
-num_cases_target=25;
-m = 1;  % pressure 20atm
-directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-location_target=[currentloc,'\',mechanism{1},'\',directory,'\','beforeoptimize'];
-cd(location_target)
-addpath(currentloc)
-time_struct_target=read_ignition_delay(location_target,num_cases_target);
-Temp1=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
-
-
-Target_data1=time_struct_target.table.data(:,10);
-% range = 12:22; % works slightly well ??
-% range = 12:25; % works slightly as well..
-range = 1:25;
-Temp1=flip(Temp1);
-Target_data1=flip(Target_data1);
-Temp1 = Temp1(range);
-Target_data1 = Target_data1(range);
-
-cd ../../..
-
-num_cases_target=25;
-m = 2;  % pressure 40atm
-directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-location_target=[currentloc,'\',mechanism{1},'\',directory,'\','beforeoptimize'];
-cd(location_target)
-addpath(currentloc)
-time_struct_target=read_ignition_delay(location_target,num_cases_target);
-Temp2=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
-
-
-Target_data2=time_struct_target.table.data(:,10);
-% range = 12:22; % works slightly well ??
-% range = 12:25; % works slightly as well..
+% num_cases_target=25;
+% m = 1;  % pressure 20atm
+% directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
+% location_target=[currentloc,'\',mechanism{1},'\',directory,'\','beforeoptimize'];
+% cd(location_target)
+% addpath(currentloc)
+% time_struct_target=read_ignition_delay(location_target,num_cases_target);
+% Temp1=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
+% 
+% 
+% Target_data1=time_struct_target.table.data(:,10);
+% % range = 12:22; % works slightly well ??
+% % range = 12:25; % works slightly as well..
 % range = 1:25;
-Temp2=flip(Temp2);
-Target_data2=flip(Target_data2);
-Temp2 = Temp2(range);
-Target_data2 = Target_data2(range);
-
-cd ../../..
-Temp = [Temp1; Temp2];
-Target_data = [Target_data1 Target_data2];
+% Temp1=flip(Temp1);
+% Target_data1=flip(Target_data1);
+% Temp1 = Temp1(range);
+% Target_data1 = Target_data1(range);
+% 
+% cd ../../..
+% 
+% num_cases_target=25;
+% m = 2;  % pressure 40atm
+% directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
+% location_target=[currentloc,'\',mechanism{1},'\',directory,'\','beforeoptimize'];
+% cd(location_target)
+% addpath(currentloc)
+% time_struct_target=read_ignition_delay(location_target,num_cases_target);
+% Temp2=time_struct_target.table.data(:,6)/1000; % do we have to include temp?
+% 
+% 
+% Target_data2=time_struct_target.table.data(:,10);
+% % range = 12:22; % works slightly well ??
+% % range = 12:25; % works slightly as well..
+% % range = 1:25;
+% Temp2=flip(Temp2);
+% Target_data2=flip(Target_data2);
+% Temp2 = Temp2(range);
+% Target_data2 = Target_data2(range);
+% 
+% cd ../../..
+% Temp = [Temp1; Temp2];
+% Target_data = [Target_data1 Target_data2];
 
     
     A = rateParam.(class_numb_text{1})(:,1);
     E = rateParam.(class_numb_text{1})(:,2);
 %% read modification ignition delay time 
-mechanism={'Ra_Reitz'};
+% mechanism={'Ra_Reitz'};
 currentloc = 'C:\Users\unghee\Dropbox\post_process';
 num_cases_modification= size(A,1);
-date = {'01_30_2017'};
-fuel_name = {'n_heptane'};
+% date = {'01_30_2017'};
+% fuel_name = {'n_heptane'};
 
 m=1; % pressure 20atm
 directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-for j = range
+% for j = range
+for j = 1: numbOftarget1
     for k = 1: numbOfClass
 % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
@@ -111,22 +134,29 @@ for j = range
     
 end
 for k = 1: numbOfClass
-    time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,range);
-    temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,range); 
+%     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,range);
+%     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,range); 
+    time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,1: numbOftarget1);
+    temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,1: numbOftarget1); 
 end
 
 m =2 ; % pressure 40atm
 directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-for j = 1: length(range)
+% for j = 1: length(range)
+for j = 1: numbOftarget2
     for k = 1: numbOfClass
 % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
     time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
-    time_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,10);
-    temp_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,6);
+%     time_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,10);
+%     temp_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,6);
+    time_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,10);
+    temp_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,6);
     end
     
 end
+
+
 % for k = 1: numbOfClass
 %     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,length(range)+range);
 %     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,length(range)+range); 
@@ -191,6 +221,12 @@ end
 if strcmp(mechanism{1},'Ra_Reitz') && ismember(6,classnumb)
 LB =[LB rateParam.('class6')(1,1)*0.13 0 ];
 UB =[UB rateParam.('class6')(1,1)*10 rateParam.('class6')(1,2)+2000 ];
+end
+
+% ndodecane
+if strcmp(mechanism{1},'MFC') && ismember(27,classnumb)
+LB =[LB rateParam.('class27')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class27')(1,1)*10 rateParam.('class27')(1,2)+2000 ];
 end
 
 nvars=2*numbOfClass;
