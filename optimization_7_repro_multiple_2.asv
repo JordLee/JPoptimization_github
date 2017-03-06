@@ -12,7 +12,7 @@ fuel_sim={'modify'};
 %% read modification ignition delay time 
 % mechanism={'MFC'};
 mechanism={'MFC'};
-date = {'03_05_2017'};
+date = {'03_06_2017'};
 fuel_name = {'n_dodecane'};
 % fuel_name = {'n_heptane'};
 equi=1;
@@ -54,9 +54,13 @@ Temp2 = Target_fuel2(:,2);
 %double the targetvalue!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Temp2 = [Temp2; Temp2];
 Target_data2 = [Target_data2; Target_data2];
+
+numbOftarget2 =length(Target_data2);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 %%
-numbOftarget2 =length(Target_data2);
+
+
 Temp = [Temp1; Temp2];
 Target_data = [Target_data1; Target_data2];
 % Temp = Temp1;
@@ -199,9 +203,9 @@ for j = 1 : size(Temp,1)
 end
 %% plot regression
 
-for k = 1: numbOfClass
-plotregression(log(time_modification.(class_numb_text{k})(:,1:10)),predictionreg.(class_numb_text{k})(1:10))
-end
+% for k = 1: numbOfClass
+% plotregression(log(time_modification.(class_numb_text{k})(:,1:10)),predictionreg.(class_numb_text{k})(1:10))
+% end
 
 
 

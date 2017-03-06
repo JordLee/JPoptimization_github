@@ -12,7 +12,7 @@ fuel_sim={'modify'};
 %% read modification ignition delay time 
 % mechanism={'MFC'};
 mechanism={'MFC'};
-date = {'03_05_2017'};
+date = {'03_06_2017'};
 fuel_name = {'n_dodecane'};
 % fuel_name = {'n_heptane'};
 equi=1;
@@ -26,7 +26,7 @@ for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];
 
 end
-m = 2;
+m = 1;
 directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
 location_rateParam=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{1}];
 cd(location_rateParam)
@@ -44,21 +44,14 @@ numbOftarget1 =length(Target_data1);
 % Temp1=flip(Temp1);
 % Target_data1=flip(Target_data1);
 
-Target_fuel2 = Shen_dode_40atm;
-Target_data2=Target_fuel2(:,5);
-Temp2 = Target_fuel2(:,2);
-
-% Temp2=flip(Temp2);
-% Target_data2=flip(Target_data2);
-%%
-%double the targetvalue!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Temp2 = [Temp2; Temp2];
-Target_data2 = [Target_data2; Target_data2];
-
-numbOftarget2 =length(Target_data2);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%%
+% Target_fuel2 = Shen_dode_40atm;
+% Target_data2=Target_fuel2(:,5);
+% Temp2 = Target_fuel2(:,2);
+% 
+% % Temp2=flip(Temp2);
+% % Target_data2=flip(Target_data2);
+% 
+% numbOftarget2 =length(Target_data2);
 
 
 Temp = [Temp1; Temp2];
@@ -149,27 +142,27 @@ for k = 1: numbOfClass
     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,1: numbOftarget1); 
 end
 
-m =2 ; % pressure 40atm
-directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-% for j = 1: length(range)
-for j = 1: numbOftarget2
-    for k = 1: numbOfClass
-% location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
-    location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
-    time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
-%     time_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,10);
-%     temp_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,6);
-    time_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,10);
-    temp_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,6);
-    end
-    
-end
-
-
-% for k = 1: numbOfClass
-%     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,length(range)+range);
-%     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,length(range)+range); 
+% m =2 ; % pressure 40atm
+% directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
+% % for j = 1: length(range)
+% for j = 1: numbOftarget2
+%     for k = 1: numbOfClass
+% % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
+%     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
+%     time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
+% %     time_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,10);
+% %     temp_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,6);
+%     time_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,10);
+%     temp_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,6);
+%     end
+%     
 % end
+% 
+% 
+% % for k = 1: numbOfClass
+% %     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,length(range)+range);
+% %     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,length(range)+range); 
+% % end
 
 
 
@@ -241,11 +234,11 @@ UB =[UB rateParam.('class6')(1,1)*10 rateParam.('class6')(1,2)+2000 ];
 end
 
 % ndodecane
-if strcmp(mechanism{1},'MFC') && ismember(27,classnumb)
+if strcmp(mechanism{1},'MFC') && ismember(15,classnumb)
 LB =[LB rateParam.('class15')(1,1)*0.13 0 ];
 UB =[UB rateParam.('class15')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
 end
-if strcmp(mechanism{1},'MFC') && ismember(27,classnumb)
+if strcmp(mechanism{1},'MFC') && ismember(26,classnumb)
 LB =[LB rateParam.('class26')(1,1)*0.13 0 ];
 UB =[UB rateParam.('class26')(1,1)*10 rateParam.('class26')(1,2)+2000 ];
 end
