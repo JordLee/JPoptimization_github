@@ -48,15 +48,12 @@ Target_fuel2 = Shen_dode_40atm;
 Target_data2=Target_fuel2(:,5);
 Temp2 = Target_fuel2(:,2);
 
-% Temp2=flip(Temp2);
-% Target_data2=flip(Target_data2);
-%%
-%double the targetvalue!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Temp2 = [Temp2; Temp2];
-Target_data2 = [Target_data2; Target_data2];
-%%%%%%%%%%%%%%%%%%%%%%%%%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%%
+
+
 numbOftarget2 =length(Target_data2);
+
+
+
 Temp = [Temp1; Temp2];
 Target_data = [Target_data1; Target_data2];
 % Temp = Temp1;
@@ -199,9 +196,9 @@ for j = 1 : size(Temp,1)
 end
 %% plot regression
 
-for k = 1: numbOfClass
-plotregression(log(time_modification.(class_numb_text{k})(:,1:10)),predictionreg.(class_numb_text{k})(1:10))
-end
+% for k = 1: numbOfClass
+% plotregression(log(time_modification.(class_numb_text{k})(:,1:10)),predictionreg.(class_numb_text{k})(1:10))
+% end
 
 
 

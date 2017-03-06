@@ -47,24 +47,12 @@ numbOftarget1 =length(Target_data1);
 Target_fuel2 = Shen_dode_40atm;
 Target_data2=Target_fuel2(:,5);
 Temp2 = Target_fuel2(:,2);
-
-% Temp2=flip(Temp2);
-% Target_data2=flip(Target_data2);
-%%
-%double the targetvalue!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Temp2 = [Temp2; Temp2];
-Target_data2 = [Target_data2; Target_data2];
-
 numbOftarget2 =length(Target_data2);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%%
 
 
 Temp = [Temp1; Temp2];
 Target_data = [Target_data1; Target_data2];
-% Temp = Temp1;
-% Target_data = Target_data1;
+
 
 cd ../../..
 
@@ -219,7 +207,7 @@ numberOftempPoints = size(Target_data,1);
 %% objective function
 
 % ObjectiveFunction = @(X) find_rate_3(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
-ObjectiveFunction = @(X) find_rate_weighting(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
+ObjectiveFunction = @(X) find_rate_weighting(X,coefs,Temp,numbOfClass,class_numb_text,Target_data,numbOftarget1,numbOftarget2);
 LB =[];
 UB =[];
 % class2
