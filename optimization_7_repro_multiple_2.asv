@@ -186,7 +186,6 @@ for j = 1 : size(Temp,1)
     coefs.(class_numb_text{k})(j,:)=coefs_element;
 
     prediction.(class_numb_text{k}){:,j}=M*coefs_element'-d;
-    predictionreg.(class_numb_text{k}){:,j}=M*coefs_element';
 %     plotregression(d,M*coefs_element')
     end
     
@@ -194,9 +193,9 @@ for j = 1 : size(Temp,1)
 end
 %% plot regression
 
-for k = 1: numbOfClass
-plotregression(log(time_modification.(class_numb_text{k})(:,1:10)),predictionreg.(class_numb_text{k})(1:10))
-end
+% for k = 1: numbOfClass
+% plotregression(Temp,prediction.(class_numb_text{k})
+% end
 
 
 
