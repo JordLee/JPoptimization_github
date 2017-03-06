@@ -1,0 +1,50 @@
+clear;
+mechanism={'MFC'};
+fuel_name={'n_dodecane'};
+date = {'03_06_2017'};
+equi = 1;
+classnumb=[1 2 3 4 5 6 7 8 9];
+
+pressure=[20];
+for k=1:length(pressure)
+    pressure_text{k}=[num2str(pressure(k)),'atm'];
+
+end
+%%
+addpath('C:\Users\unghee\Dropbox\post_process');
+real_fuel_ID;
+pure_component_ID;
+Target_fuel1 = Vasu_dode_20atm;
+Target_data.pressure_text{1}=Target_fuel1(:,5);
+Temp.pressure_text{1} = Target_fuel1(:,2);
+numbOftarget.pressure_text{1} =length(Target_data.pressure_text{1});
+
+Temp = [Temp.pressure_text{1}];
+Target_data = [Temp.pressure_text{1}];
+
+
+%%
+sensitivity_analysis_3;
+
+clearvars -except sensitivity classnumb pressure classnumb_text pressure_text
+class_to_optimize = [];
+for k=1:length(classnumb)
+    
+    if (sensitivity.(pressure_text{k}).(classnumb_text{k}).Sig_avg > 1) && (sensitivity.(classnumb_text{k}).Sgr_avg > 0.5)
+        pressure_text{k}.class_to_optimize = [class_to_optimize k];
+    end
+end
+
+
+classnumb=pressure_text{k}.class_to_optimize;
+classnumb = [4,6];
+
+clearvars -except classnumb Temp numberOftarget Target_data
+optimization_10;
+
+
+%modification after optimize
+
+%load 
+
+% load -> output rightaway  bash

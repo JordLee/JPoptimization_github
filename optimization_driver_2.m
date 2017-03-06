@@ -1,111 +1,63 @@
 clear;
-close all;
-mechanism={'Ra_Reitz'};
-fuel_name={'n_heptane'};
-date = {'01_30_2017'};
+mechanism={'MFC'};
+fuel_name={'n_dodecane'};
+date = {'03_06_2017'};
 fuel_sim={'modify_class2_class4_class6_moderate'};
 equi = 1;
-pressure=[40];
-classnumb=[2 4 6];
-
+classnumb=[11 15 21 22 23 24 26 27 28];
+pressure=[20];
+%% sensitivity
 sensitivity_analysis_3;
-
 clearvars -except sensitivity classnumb classnumb_text pressure_text pressure mechanism fuel_name date fuel_sim equi
-% Determine classes with overall sensitivity
-classnumb_optimize.entire.(pressure_text{1}) = [];
-% classnumb_optimize.entire.(pressure_text{1}) = sturct([]);
-pressure_optimize_text =[];
-pressure_optimize =[];
-for m = 1 : length(pressure)
-    for k=1:length(classnumb)
+
+
+m =1;
+disp('looking at sensitivity at one pressure condition')
+class_to_optimize.(pressure_text{m}) = [];
+for k=1:length(classnumb)
     
-      if (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sig_avg > 1) && (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr_avg > 0.5)
-          classnumb_optimize.entire.(pressure_text{m}) = [ classnumb_optimize.entire.(pressure_text{m}) classnumb(k)];
-         
-      end
-    end
-     pressure_optimize_text = [pressure_optimize pressure_text{m}];
-     pressure_optimize = [pressure_optimize pressure(m)];
-end
-     
- for m = 1 : length(pressure_optimize)        
- classnumb=classnumb_optimize.entire.(pressure_text{m}); %have to change for multiple pressure in optimization.m
- end
-%% HTR optimize 
-% add sgr information for the future work
-classnumb_optimize.HTR.(pressure_text{1}) = [];
-pressure_optimize_text =[];
-pressure_optimize =[];
-for m = 1 : length(pressure)
-    for k=1:length(classnumb)
-    
-        if (abs(sensitivity.(pressure_text{m}).(classnumb_text{k}).Sig(4))) > 1
-            classnumb_optimize.HTR.(pressure_text{m}) = [classnumb_optimize.HTR.(pressure_text{m}) classnumb(k)];
-        end
-    end
-       pressure_optimize_text = [pressure_optimize pressure_text{m}];
-       pressure_optimize = [pressure_optimize pressure(m)];
-end
-for m = 1 : length(pressure_optimize)  
-classnumb=classnumb_optimize.HTR.(pressure_text{m});
-end
-pressure = pressure_optimize;
-
-clearvars -except classnumb pressure mechanism fuel_name date fuel_sim equi classnumb_optimize sensitivity
-range = 1:10;
-% optimization_10;
-optimization_7_repro_multiple_2;
-%%
-% final result for HTR, and LockDouwn
-clearvars -except final_result pressure mechanism fuel_name date fuel_sim equi classnumb_optimize sensitivity pressure_text
-
-numbOfPressure=length(pressure) ;
-for k=1:length(pressure)
-    pressure_text{k}=['P',num2str(pressure(k)),'atm'];
+%     if (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sig_avg > 1) && (sensitivity.(classnumb_text{k}).Sgr_avg > 0.5)
+     if (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sig_avg > 1)...
+             && (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr_avg > 0.5)
+        class_to_optimize.(pressure_text{m}) = [class_to_optimize.(pressure_text{m}) classnumb(k)];
+     end
 end
 
-classnumb_optimize.NTC.(pressure_text{1})=[];
-pressure_optimize_text =[];
-pressure_optimize =[];
-Entire = classnumb_optimize.entire.(pressure_text{1});
-HTR = classnumb_optimize.HTR.(pressure_text{1});
-
-classnumb_optimize.NTC.(pressure_text{1})...
-    = setxor(Entire,HTR);
-numbOfClass_NTC = length(classnumb_optimize.NTC.(pressure_text{1}));
-
-class_numb_text_NTC = {};
-for k=1:numbOfClass_NTC
-%     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
-    class_numb_text_NTC=[class_numb_text_NTC ['class',num2str(classnumb_optimize.NTC.(pressure_text{1})(k))]];
-end
-
-classnumbOfNTC = [];
-for m = 1 : length(pressure)
-    for k=1:numbOfClass_NTC
-    
-        if (abs(sensitivity.(pressure_text{m}).(class_numb_text_NTC{k}).Sig(2)) > 1) 
-            classnumbOfNTC = [classnumbOfNTC classnumb_optimize.NTC.(pressure_text{1})(k)];
-        end
-    end
-       pressure_optimize_text = [pressure_optimize pressure_text{m}];
-       pressure_optimize = [pressure_optimize pressure(m)];
-end
-classnumb_optimize.NTC.(pressure_text{m}) = classnumbOfNTC;
-
-for m = 1 : length(pressure_optimize)  
-classnumb=classnumb_optimize.NTC.(pressure_text{m});
-end
-pressure = pressure_optimize;
+classnumb = class_to_optimize.(pressure_text{m})
 
 
-clearvars -except final_result classnumb pressure mechanism fuel_name date fuel_sim equi classnumb_optimize sensitivity
-range = 12:20;
+%% Target setting
+addpath('C:\Users\unghee\Dropbox\post_process');
+real_fuel_ID;
+pure_component_ID;
+Target_fuel1 = Vasu_dode_20atm;
+Target_data.pressure_text{1}=Target_fuel1(:,5);
+Temp.pressure_text{1} = Target_fuel1(:,2);
+numbOftarget.pressure_text{1} =length(Target_data.pressure_text{1});
 
-optimization_7_repro_multiple_2;
+Temp = [Temp.pressure_text{1}];
+Target_data = [Temp.pressure_text{1}];
+
+
+%% Optimization
+
+clearvars -except classnumb Temp numberOftarget Target_data
+optimization_10;
+
 
 %modification after optimize
-
+% clearvars -except sensitivity classnumb pressure classnumb_text
+% class_to_optimize = [];
+% for k=1:length(classnumb)
+%     
+%     if (sensitivity.(pressure_text{k}).(classnumb_text{k}).Sig_avg > 1) && (sensitivity.(classnumb_text{k}).Sgr_avg > 0.5)
+%         pressure_text{k}.class_to_optimize = [class_to_optimize k];
+%     end
+% end
+% 
+% 
+% classnumb=pressure_text{k}.class_to_optimize;
+% classnumb = [4,6];
 %load 
 
 % load -> output rightaway  bash

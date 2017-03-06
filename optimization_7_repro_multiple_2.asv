@@ -1,7 +1,7 @@
 clear all
 % close all
 
-classnumb=[15 26 27];
+classnumb=[11 15 21 22 23 24 26 27 28];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
@@ -26,53 +26,42 @@ for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];
 
 end
-m = 2;
+m = 1;
 directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
 location_rateParam=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{1}];
 cd(location_rateParam)
 load rateParam.mat;
 clear m;
 %% exp data
-% load rateParam.mat;
-addpath('C:\Users\unghee\Dropbox\post_process');
-real_fuel_ID;
-pure_component_ID;
-Target_fuel1 = Vasu_dode_20atm;
-Target_data1=Target_fuel1(:,5);
-Temp1 = Target_fuel1(:,2);
-numbOftarget1 =length(Target_data1);
-% Temp1=flip(Temp1);
-% Target_data1=flip(Target_data1);
 
-Target_fuel2 = Shen_dode_40atm;
-Target_data2=Target_fuel2(:,5);
-Temp2 = Target_fuel2(:,2);
+% addpath('C:\Users\unghee\Dropbox\post_process');
+% real_fuel_ID;
+% pure_component_ID;
+% Target_fuel1 = Vasu_dode_20atm;
+% Target_data1=Target_fuel1(:,5);
+% Temp1 = Target_fuel1(:,2);
+% numbOftarget1 =length(Target_data1);
+% % Temp1=flip(Temp1);
+% % Target_data1=flip(Target_data1);
+% 
+% Target_fuel2 = Shen_dode_40atm;
+% Target_data2=Target_fuel2(:,5);
+% Temp2 = Target_fuel2(:,2);
+% 
+% % Temp2=flip(Temp2);
+% % Target_data2=flip(Target_data2);
+% 
+% numbOftarget2 =length(Target_data2);
+% 
+% 
+% Temp = [Temp1; Temp2];
+% Target_data = [Target_data1; Target_data2];
+% % Temp = Temp1;
+% % Target_data = Target_data1;
+% 
+% cd ../../..
 
-% Temp2=flip(Temp2);
-% Target_data2=flip(Target_data2);
-%%
-%double the targetvalue!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Temp2 = [Temp2; Temp2];
-Target_data2 = [Target_data2; Target_data2];
 
-numbOftarget2 =length(Target_data2);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%%
-
-
-Temp = [Temp1; Temp2];
-Target_data = [Target_data1; Target_data2];
-% Temp = Temp1;
-% Target_data = Target_data1;
-
-cd ../../..
-
-% Target_data = Shen_hep_40atm;
-% % Target_data = Vasu_40atm;
-% % Target_data = Wang_40atm;
-% Temp = Target_data(:,2);
-% Temp_un = Target_data(:,1);
 %% dummy target
 
 % num_cases_target=25;
@@ -149,35 +138,35 @@ for k = 1: numbOfClass
     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,1: numbOftarget1); 
 end
 
-m =2 ; % pressure 40atm
-directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-% for j = 1: length(range)
-for j = 1: numbOftarget2
-    for k = 1: numbOfClass
-% location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
-    location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
-    time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
-%     time_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,10);
-%     temp_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,6);
-    time_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,10);
-    temp_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,6);
-    end
-    
-end
-
-
-% for k = 1: numbOfClass
-%     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,length(range)+range);
-%     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,length(range)+range); 
+% m =2 ; % pressure 40atm
+% directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
+% % for j = 1: length(range)
+% for j = 1: numbOftarget2
+%     for k = 1: numbOfClass
+% % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
+%     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
+%     time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
+% %     time_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,10);
+% %     temp_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,6);
+%     time_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,10);
+%     temp_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,6);
+%     end
+%     
 % end
+% 
+% 
+% % for k = 1: numbOfClass
+% %     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,length(range)+range);
+% %     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,length(range)+range); 
+% % end
 
 
 
 %%  coefficient
-for j = 1 : size(Temp,1)  
+for j = 1 : size(Temp.pressure_text{1},1)  
 % for k = 1 : 1
 % for j = 1 : 1
-    Temp_current = Temp(j);
+    Temp_current = Temp.pressure_text{1}(j);
     
 
     for k = 1: numbOfClass
@@ -241,17 +230,41 @@ UB =[UB rateParam.('class6')(1,1)*10 rateParam.('class6')(1,2)+2000 ];
 end
 
 % ndodecane
-if strcmp(mechanism{1},'MFC') && ismember(27,classnumb)
+if strcmp(mechanism{1},'MFC') && ismember(21,classnumb)
+LB =[LB rateParam.('class21')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class21')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+end
+if strcmp(mechanism{1},'MFC') && ismember(22,classnumb)
+LB =[LB rateParam.('class22')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class22')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+end
+if strcmp(mechanism{1},'MFC') && ismember(23,classnumb)
+LB =[LB rateParam.('class23')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class23')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+end
+if strcmp(mechanism{1},'MFC') && ismember(24,classnumb)
+LB =[LB rateParam.('class24')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class24')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+end
+if strcmp(mechanism{1},'MFC') && ismember(11,classnumb)
+LB =[LB rateParam.('class11')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class11')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+end
+if strcmp(mechanism{1},'MFC') && ismember(15,classnumb)
 LB =[LB rateParam.('class15')(1,1)*0.13 0 ];
 UB =[UB rateParam.('class15')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
 end
-if strcmp(mechanism{1},'MFC') && ismember(27,classnumb)
+if strcmp(mechanism{1},'MFC') && ismember(26,classnumb)
 LB =[LB rateParam.('class26')(1,1)*0.13 0 ];
 UB =[UB rateParam.('class26')(1,1)*10 rateParam.('class26')(1,2)+2000 ];
 end
 if strcmp(mechanism{1},'MFC') && ismember(27,classnumb)
 LB =[LB rateParam.('class27')(1,1)*0.13 0 ];
 UB =[UB rateParam.('class27')(1,1)*10 rateParam.('class27')(1,2)+2000 ];
+end
+if strcmp(mechanism{1},'MFC') && ismember(28,classnumb)
+LB =[LB rateParam.('class28')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class28')(1,1)*10 rateParam.('class27')(1,2)+2000 ];
 end
 
 nvars=2*numbOfClass;
