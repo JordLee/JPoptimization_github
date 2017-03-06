@@ -1,7 +1,7 @@
 clear all
 % close all
 
-classnumb=[27];
+classnumb=[15 26 27];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
@@ -12,7 +12,7 @@ fuel_sim={'modify'};
 %% read modification ignition delay time 
 % mechanism={'MFC'};
 mechanism={'MFC'};
-date = {'03_04_2017'};
+date = {'03_05_2017'};
 fuel_name = {'n_dodecane'};
 % fuel_name = {'n_heptane'};
 equi=1;
