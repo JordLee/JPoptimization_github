@@ -167,8 +167,8 @@ legend_text{3}=['MFC ',pressure_text{k},', after optimize'];
 
     hold on
 
-     load('simulation_result_beforeoptimize_20atm_phi_1.mat')
-    fuel_sim={'beforeoptimize'};
+     load('simulation_result_afteroptimize_20atm_phi_1.mat')
+    fuel_sim={'afteroptimize'};
 
      for j=1:length(fuel_sim)
         semilogy(sim.(mechanism{i}).(fuel_sim{1}).(pressure_text{k}).table.data(:,6),...
