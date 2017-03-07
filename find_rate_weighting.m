@@ -10,14 +10,14 @@ for j= 1: length(Temp)
 %     else
 %         W = 1/numbOftarget2;
 %     end
-    W=1;
+    
     
      for i = 1: numbOfClass
     
      A=X(2*i-1);
      E=X(2*i);
 %      W=X(3*i);
-     
+     W=1;
 %      time(j,i)=coefs.(classnumb_text{i})(j,1)*log(X(2*i-1))+coefs.(classnumb_text{i})(j,2)*log(Temp(j))...
 %          +coefs.(classnumb_text{i})(j,3)*X(2*i)+coefs.(classnumb_text{i})(j,4)*log(X(2*i-1))*X(2*i)...
 %          +coefs.(classnumb_text{i})(j,5)*(log(X(2*i-1)))^2+coefs.(classnumb_text{i})(j,6)*(X(2*i))^2;

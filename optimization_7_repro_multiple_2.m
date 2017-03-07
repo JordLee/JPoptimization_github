@@ -1,7 +1,7 @@
 clear all
 close all
 
-classnumb=[11 22 26 27 28];
+classnumb=[15 22 26 27 28];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass

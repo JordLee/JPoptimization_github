@@ -72,7 +72,7 @@ for k=1:numbOfClass
 %     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
     class_numb_text=[class_numb_text ['class',num2str(class_numb(k))]];
 end
-pressure=[20 40];
+pressure=[20];
 equi=1;
 for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];

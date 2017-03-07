@@ -4,7 +4,7 @@ clear all
 mechanism={'MFC' };
 % fuel_sim={'base','v1','v2','v3'};
 
-pressure=[20 40];
+pressure=[20];
 for k=1:length(pressure)
     pressure_text{k}=['P',num2str(pressure(k)),'atm'];
 end
@@ -205,45 +205,45 @@ hold on
     else
     semilogy(Shen_dode_40atm(:,2),Shen_dode_40atm(:,5),'r*','markersize',marker_size)
     end
-
-    hold on
-
-
-    load('simulation_result_modify_20atm_phi_1.mat')
-    fuel_sim={'modify'};
-
-
+%% upper bound & lowerbond
+%     hold on
+% 
+% 
+%     load('simulation_result_modify_20atm_phi_1.mat')
+%     fuel_sim={'modify'};
+% 
+% 
+% %     for j=1:length(fuel_sim)
+% %         for q= 1: num_cases(k)
+% %         semilogy(sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,6),...
+% %         sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,10),...
+% %         'bo','markersize',marker_size);
+% %         end
+% %     end
+% %     hold on;
+% 
+%  x=[]; y=[];
 %     for j=1:length(fuel_sim)
 %         for q= 1: num_cases(k)
-%         semilogy(sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,6),...
-%         sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,10),...
-%         'bo','markersize',marker_size);
+%         x(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(1,6);
+%         y(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(4,10);
+%                    
+%             
 %         end
 %     end
-%     hold on;
-    %upper bound & lowerbond
- x=[]; y=[];
-    for j=1:length(fuel_sim)
-        for q= 1: num_cases(k)
-        x(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(1,6);
-        y(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(4,10);
-                   
-            
-        end
-    end
-     semilogy(x,y,'k','markersize',marker_size,'LineWidth',1.5);
- x=[]; y=[];
-    for j=1:length(fuel_sim)
-        for q= 1: num_cases(k)
-        x(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(1,6);
-        y(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(7,10);
-                   
-            
-        end
-    end
-     semilogy(x,y,'k','markersize',marker_size,'LineWidth',1.5);    
+%      semilogy(x,y,'k','markersize',marker_size,'LineWidth',1.5);
+%  x=[]; y=[];
+%     for j=1:length(fuel_sim)
+%         for q= 1: num_cases(k)
+%         x(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(1,6);
+%         y(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(7,10);
+%                    
+%             
+%         end
+%     end
+%      semilogy(x,y,'k','markersize',marker_size,'LineWidth',1.5);    
 
-    
+%%    
     legend(legend_text,'location','SouthEast','interpreter','none')
     legend('boxoff')
     xlabel('1000/T (1/K)')
