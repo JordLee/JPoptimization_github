@@ -20,7 +20,6 @@ fuel_sim={'modify'};
 currentloc = 'C:\Users\unghee\Dropbox\post_process';
 
 
-
 % pressure=[20 40];
 for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];
@@ -112,18 +111,16 @@ clear m;
     A = rateParam.(class_numb_text{1})(:,1);
     E = rateParam.(class_numb_text{1})(:,2);
 %% read modification ignition delay time 
-% mechanism={'Ra_Reitz'};
+
 currentloc = 'C:\Users\unghee\Dropbox\post_process';
 num_cases_modification= size(A,1);
-% date = {'01_30_2017'};
-% fuel_name = {'n_heptane'};
 
 m=1; % pressure 20atm
 directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-% for j = range
-for j = 1: numbOftarget.pressure_text{m}
+
+for j = 1: numbOftarget1
     for k = 1: numbOfClass
-% location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
+
     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
     time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
     time_modification.(class_numb_text{k})(:,j)=time_struct_modification.table.data(:,10);
@@ -132,40 +129,32 @@ for j = 1: numbOftarget.pressure_text{m}
     
 end
 for k = 1: numbOfClass
-%     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,range);
-%     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,range); 
-    time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,1: numbOftarget.pressure_text{m});
-    temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,1: numbOftarget.pressure_text{m}); 
+
+    time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,1: numbOftarget1);
+    temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,1: numbOftarget1); 
 end
 
-% m =2 ; % pressure 40atm
-% directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-% % for j = 1: length(range)
-% for j = 1: numbOftarget.pressure_text{m}
-%     for k = 1: numbOfClass
-% % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
-%     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
-%     time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
-% %     time_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,10);
-% %     temp_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,6);
-%     time_modification.(class_numb_text{k})(:,numbOftarget.pressure_text{m-1}+j)=time_struct_modification.table.data(:,10);
-%     temp_modification.(class_numb_text{k})(:,numbOftarget.pressure_text{m-1}+j)=time_struct_modification.table.data(:,6);
-%     end
-%     
-% end
-% 
-% 
-% % for k = 1: numbOfClass
-% %     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,length(range)+range);
-% %     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,length(range)+range); 
-% % end
+m =2 ; % pressure 40atm
+directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
+
+for j = 1: numbOftarget2
+    for k = 1: numbOfClass
+
+    location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
+    time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
+    time_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,10);
+    temp_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,6);
+    end
+    
+end
+
+
 
 
 
 %%  coefficient
 for j = 1 : size(Temp,1)  
-% for k = 1 : 1
-% for j = 1 : 1
+
     Temp_current = Temp(j);
     
 
@@ -174,7 +163,6 @@ for j = 1 : size(Temp,1)
     A = rateParam.(class_numb_text{k})(:,1);
     E = rateParam.(class_numb_text{k})(:,2);
     M = [log(A) log(Temp_current)*ones(7,1) E log(A).*(E) log(A).*log(A) E.^2];
-%     totalM = [totalM M];
     d = log(time_current);
     coefs_inv = lsqlin(M,d);
     coefs_element = coefs_inv';
@@ -202,12 +190,10 @@ end
 %% OPTIMIZER
 
 % Target Temp value
-% te(:,1) = Target_data(:,3);
-% te(:,1) = Target_data;
+
 numberOftempPoints = size(Target_data,1);
 %% objective function
 
-% ObjectiveFunction = @(X) find_rate_3(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
 ObjectiveFunction = @(X) find_rate_weighting(X,coefs,Temp,numbOfClass,class_numb_text,Target_data);
 LB =[];
 UB =[];

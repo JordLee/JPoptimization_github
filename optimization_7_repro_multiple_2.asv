@@ -1,7 +1,7 @@
-clear all
+% clear all
 % close all
 
-classnumb=[11 15 21 22 23 24 26 27 28];
+% classnumb=[11 15 21 22 23 24 26 27 28];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
@@ -11,17 +11,17 @@ fuel_sim={'modify'};
 
 %% read modification ignition delay time 
 % mechanism={'MFC'};
-mechanism={'MFC'};
-date = {'03_06_2017'};
-fuel_name = {'n_dodecane'};
-% fuel_name = {'n_heptane'};
-equi=1;
+% mechanism={'MFC'};
+% date = {'03_06_2017'};
+% fuel_name = {'n_dodecane'};
+% % fuel_name = {'n_heptane'};
+% equi=1;
 
 currentloc = 'C:\Users\unghee\Dropbox\post_process';
 
 
 
-pressure=[20 40];
+% pressure=[20 40];
 for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];
 
@@ -121,7 +121,7 @@ num_cases_modification= size(A,1);
 m=1; % pressure 20atm
 directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
 % for j = range
-for j = 1: numbOftarget1
+for j = 1: numbOftarget.pressure_text{m}
     for k = 1: numbOfClass
 % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
@@ -134,39 +134,39 @@ end
 for k = 1: numbOfClass
 %     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,range);
 %     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,range); 
-    time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,1: numbOftarget1);
-    temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,1: numbOftarget1); 
+    time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,1: numbOftarget.pressure_text{m});
+    temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,1: numbOftarget.pressure_text{m}); 
 end
 
-% m =2 ; % pressure 40atm
-% directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-% % for j = 1: length(range)
-% for j = 1: numbOftarget2
-%     for k = 1: numbOfClass
-% % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
-%     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
-%     time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
-% %     time_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,10);
-% %     temp_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,6);
-%     time_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,10);
-%     temp_modification.(class_numb_text{k})(:,numbOftarget1+j)=time_struct_modification.table.data(:,6);
-%     end
-%     
+m =2 ; % pressure 40atm
+directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
+% for j = 1: length(range)
+for j = 1: numbOftarget.pressure_text{m}
+    for k = 1: numbOfClass
+% location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
+    location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
+    time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);
+%     time_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,10);
+%     temp_modification.(class_numb_text{k})(:,length(range)+j)=time_struct_modification.table.data(:,6);
+    time_modification.(class_numb_text{k})(:,numbOftarget.pressure_text{m-1}+j)=time_struct_modification.table.data(:,10);
+    temp_modification.(class_numb_text{k})(:,numbOftarget.pressure_text{m-1}+j)=time_struct_modification.table.data(:,6);
+    end
+    
+end
+
+
+% for k = 1: numbOfClass
+%     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,length(range)+range);
+%     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,length(range)+range); 
 % end
-% 
-% 
-% % for k = 1: numbOfClass
-% %     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,length(range)+range);
-% %     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,length(range)+range); 
-% % end
 
 
 
 %%  coefficient
-for j = 1 : size(Temp.pressure_text{1},1)  
+for j = 1 : size(Temp,1)  
 % for k = 1 : 1
 % for j = 1 : 1
-    Temp_current = Temp.pressure_text{1}(j);
+    Temp_current = Temp(j);
     
 
     for k = 1: numbOfClass
