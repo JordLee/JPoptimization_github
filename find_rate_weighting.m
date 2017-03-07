@@ -5,11 +5,12 @@ time = zeros(length(Temp),numbOfClass);
 time_weight_differ = zeros(length(Temp),numbOfClass);
 for j= 1: length(Temp)
 
-    if j<=numbOftarget1
-        W = 1/numbOftarget1;
-    else
-        W = 1/numbOftarget2;
-    end
+%     if j<=numbOftarget1
+%         W = 1/numbOftarget1;
+%     else
+%         W = 1/numbOftarget2;
+%     end
+    W=1;
     
      for i = 1: numbOfClass
     
