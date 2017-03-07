@@ -163,9 +163,9 @@ for k = 1 : numbOfClass
                              lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4});
                       elseif variation_numb == 4
                              rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
-                             rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*7.5; % A>>1, A*7.5
+                             rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*9; % A>>1, A*7.5
                              rawCellColumns2{i,4} = str2num(rawCellColumns{i,4})+2000; % E+2000 
-                             lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*7.5;
+                             lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*9;
                              lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4})+2000;
                       elseif variation_numb == 5
                              rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
@@ -175,8 +175,8 @@ for k = 1 : numbOfClass
                              lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4})+2000; % E+2000                          
                       elseif variation_numb == 6
                              rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
-                             rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*0.6; % A<1  
-                             lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*0.6;
+                             rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*0.1; % A<1  
+                             lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*0.1;
                              if str2num(rawCellColumns{i,4})-2000>0;
                                 rawCellColumns2{i,4} = str2num(rawCellColumns{i,4})-2000; % E-2000 
                                 lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4})-2000;
@@ -186,8 +186,8 @@ for k = 1 : numbOfClass
                              end           
                       elseif variation_numb == 7
                              rawCellColumns2{i,9} =  ['!***ClASS',num2str(class_numb(k)),'***','v_',num2str(variation_numb)];
-                             rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*0.13; % A<<1  
-                             lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*0.13; 
+                             rawCellColumns2{i,2} = str2num(rawCellColumns{i,2})*0.05; % A<<1  
+                             lsqfit(variation_numb,1) = str2num(rawCellColumns{i,2})*0.05; 
                              if str2num(rawCellColumns{i,4})-2000>0;
                                 rawCellColumns2{i,4} = str2num(rawCellColumns{i,4})-2000; % E-2000 
                                 lsqfit(variation_numb,2) = str2num(rawCellColumns{i,4})-2000;

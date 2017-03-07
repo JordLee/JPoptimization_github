@@ -2,11 +2,12 @@ clear;
 mechanism={'MFC'};
 fuel_name={'n_dodecane'};
 date = {'03_06_2017'};
-fuel_sim={'modify_class2_class4_class6_moderate'};
+fuel_sim={'modify_sensitivity'};
 equi = 1;
 classnumb=[11 15 21 22 23 24 26 27 28];
-pressure=[20];
+pressure=[40];
 %% sensitivity
+addpath('C:\Users\unghee\Dropbox\JPoptimization_github');
 sensitivity_analysis_3;
 clearvars -except sensitivity classnumb classnumb_text pressure_text pressure mechanism fuel_name date fuel_sim equi
 
@@ -30,19 +31,21 @@ classnumb = class_to_optimize.(pressure_text{m})
 addpath('C:\Users\unghee\Dropbox\post_process');
 real_fuel_ID;
 pure_component_ID;
-Target_fuel1 = Vasu_dode_20atm;
+Target_fuel1 = Shen_dode_40atm;
 Target_data.pressure_text{1}=Target_fuel1(:,5);
 Temp.pressure_text{1} = Target_fuel1(:,2);
-numbOftarget.pressure_text{1} =length(Target_data.pressure_text{1});
-
+numbOftarget.(pressure_text{1}) =length(Target_data.pressure_text{1});
+% Target_data=Target_fuel1(:,5);
+% numbOftarget=length(Target_data);
+% Temp=Target_fuel1(:,2);
 Temp = [Temp.pressure_text{1}];
 Target_data = [Temp.pressure_text{1}];
 
 
 %% Optimization
 
-clearvars -except classnumb Temp numberOftarget Target_data
-optimization_10;
+clearvars -except classnumb Temp numberOftarget Target_data sensitivity pressure fuel_name
+optimization_7_repro_multiple_2
 
 
 %modification after optimize

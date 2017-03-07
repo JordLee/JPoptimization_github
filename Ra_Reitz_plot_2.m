@@ -4,7 +4,7 @@ clear all
 mechanism={'MFC' };
 % fuel_sim={'base','v1','v2','v3'};
 
-pressure=[20 40];
+pressure=[20];
 for k=1:length(pressure)
     pressure_text{k}=['P',num2str(pressure(k)),'atm'];
 end
@@ -190,7 +190,7 @@ legend_text{3}=['MFC ',pressure_text{k},', after optimize'];
     
      semilogy(sim.(mechanism{1}).(fuel_sim{1}).(pressure_text{k}).table.data(:,6),...
      sim.(mechanism{1}).(fuel_sim{1}).(pressure_text{k}).table.data(:,10),...
-     'b--','markersize',marker_size)
+     'b','markersize',marker_size)
    
 
 
@@ -231,7 +231,7 @@ hold on
             
         end
     end
-     semilogy(x,y,'k','markersize',marker_size,'LineWidth',1.5);
+%      semilogy(x,y,'k','markersize',marker_size,'LineWidth',1.5);
  x=[]; y=[];
     for j=1:length(fuel_sim)
         for q= 1: num_cases(k)
@@ -241,7 +241,7 @@ hold on
             
         end
     end
-     semilogy(x,y,'k','markersize',marker_size,'LineWidth',1.5);    
+%      semilogy(x,y,'k','markersize',marker_size,'LineWidth',1.5);    
 
     
     legend(legend_text,'location','SouthEast','interpreter','none')

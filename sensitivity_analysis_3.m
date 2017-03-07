@@ -34,7 +34,8 @@ num_cases_modification= 3;
 % date = {'01_30_2017'};
 
 for m = 1 : numbOfPressure
-    for k = 1 :numbOfClass
+%     for k = 1 :numbOfClass
+    for k = 1 :1
      for j = 1: 25
         location_modification=['C:\Users\unghee\Dropbox\post_process','\',mechanism{1},'\',fuel_name{1},'_',num2str(pressure(m)),...
         'atm','_','phi',num2str(equi),'_',date{1},'\',fuel_sim{1},'\',classnumb_text{k},'\',num2str(j)];
@@ -79,10 +80,10 @@ for m = 1 : numbOfPressure
  
     p_tempPoints_gr =[1, locs2, locs, length(temp)]; % added end point
 
-    temp_p_tempPoints_gr=[temp(locs2),temp(locs)];
-     sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr = ones(1,length(p_tempPoints_gr));
+    temp_p_tempPoints_gr=[temp(locs2),temp(locs), temp(length(temp))];
+     sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr = ones(1,length(p_tempPoints_gr)-1);
     %rotational sensitivity
-    for i = 1 : length(p_tempPoints_gr)
+    for i = 1 : length(p_tempPoints_gr)-1
      sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr(i)...
          = 100*(d_log_tk1(p_tempPoints_gr(i))/dh - d_log_tk2(p_tempPoints_gr(i))/dh)/log10(k1/k2); 
     end
@@ -98,84 +99,84 @@ end
 % hFig = figure(1);
 % set(hFig, 'Position', [20 50 580 3500])
 
-% for m = 1 : numbOfPressure
-% for k = 1 : numbOfClass
-% h=figure('position',[20 50 1200 480]);
-% subplot(1,2,1);
-% set(gca,'Fontsize',13)
-% semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,:)/1000,'k-','markersize',marker_size);
-% hold on
-% semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(2,:)/1000,'rs-','markersize',marker_size);
-% hold on
-% semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(3,:)/1000,'bx-','markersize',marker_size);
-% % legend('baseline','k=2''k=1')
+for m = 1 : numbOfPressure
+for k = 1 : numbOfClass
+h=figure('position',[20 50 1200 480]);
+subplot(1,2,1);
+set(gca,'Fontsize',13)
+semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,:)/1000,'k-','markersize',marker_size);
+hold on
+semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(2,:)/1000,'rs-','markersize',marker_size);
+hold on
+semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(3,:)/1000,'bx-','markersize',marker_size);
+% legend('baseline','k=2''k=1')
+
+% legend_text{1}='baseline';
+% legend_text{2}='k=2';
+% legend_text{3}='k=1';
 % 
-% % legend_text{1}='baseline';
-% % legend_text{2}='k=2';
-% % legend_text{3}='k=1';
-% % 
-% % semilogy(sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).table.data(:,6),...
-% %     sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).table.data(:,10),...
-% %     'k--','markersize',marker_size)
-% % legend_text{end+1}=[mechanism{i},'_','before'];
-% % 
-% % 
+% semilogy(sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).table.data(:,6),...
+%     sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).table.data(:,10),...
+%     'k--','markersize',marker_size)
+% legend_text{end+1}=[mechanism{i},'_','before'];
 % 
-% semilogy([temp_p_tempPoints_ig(1),temp_p_tempPoints_ig(end)],...
-%     [sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,1)/1000,...
-%     sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,end)/1000]...
-%     ,'gp','markersize',12);
-% hold on
-% semilogy(locsValue,peaks,'gp','markersize',12);
-% hold on
-% semilogy(locsValue2,-peaks2,'gp','markersize',12);
 % 
-% legend('baseline','k=2','k=1','extreme points')
+
+semilogy([temp_p_tempPoints_ig(1),temp_p_tempPoints_ig(end)],...
+    [sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,1)/1000,...
+    sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,end)/1000]...
+    ,'gp','markersize',12);
+hold on
+semilogy(locsValue,peaks,'gp','markersize',12);
+hold on
+semilogy(locsValue2,-peaks2,'gp','markersize',12);
+
+legend('baseline','k=2','k=1','extreme points')
+xlabel('1000/T (1/K)')
+ylabel('Ignition Delay Time (ms)')
+
+
+
+
+subplot(1,2,2);
+plot(temp_p_tempPoints_ig,sensitivity.(pressure_text{m}).(classnumb_text{k}).Sig,'k^-','markersize',marker_size);
+ylim([-25 25])
+hold on
+% figure
+plot(temp_p_tempPoints_gr,sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr,'ko-','markersize',marker_size);
+
+ylim([-30 25])
+xlabel('1000/T (1/K)')
+ylabel('Ignition Delay Time (ms)')
+legend('ignition delay sensitivity','gradient sensitivity')
+
+annotation(h,'textbox',[0.213 0.38 0.279 0.05],...
+    'String',{fuel_name{1},...
+     '/Air',classnumb_text{k}, '\phi=1',pressure_text{m}},...
+    'FontSize',13,...
+    'FontName','Arial',...
+    'FitBoxToText','off',...
+    'LineStyle','none');
+
+% legend(legend_text,'location','SouthEast','interpreter','none')
+% legend('boxoff')
 % xlabel('1000/T (1/K)')
 % ylabel('Ignition Delay Time (ms)')
-% 
-% 
-% 
-% 
-% subplot(1,2,2);
-% plot(temp_p_tempPoints_ig,sensitivity.(pressure_text{m}).(classnumb_text{k}).Sig,'k^-','markersize',marker_size);
-% ylim([-25 25])
-% hold on
-% % figure
-% plot(temp_p_tempPoints_gr,sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr,'ko-','markersize',marker_size);
-% 
-% ylim([-30 25])
-% xlabel('1000/T (1/K)')
-% ylabel('Ignition Delay Time (ms)')
-% legend('ignition delay sensitivity','gradient sensitivity')
-% 
-% annotation(h,'textbox',[0.213 0.38 0.279 0.05],...
+% % axis([0.7 1.6 20 40000])
+% % clear legend_text
+% annotation(h,'textbox',[0.413 0.38 0.279 0.05],...
 %     'String',{'n-heptane',...
-%      '/Air',classnumb_text{k}, '\phi=1',pressure_text{m}},...
+%      '/Air',classnumb_text{k}, '\phi=1'},...
 %     'FontSize',13,...
 %     'FontName','Arial',...
 %     'FitBoxToText','off',...
 %     'LineStyle','none');
-% 
-% % legend(legend_text,'location','SouthEast','interpreter','none')
-% % legend('boxoff')
-% % xlabel('1000/T (1/K)')
-% % ylabel('Ignition Delay Time (ms)')
-% % % axis([0.7 1.6 20 40000])
-% % % clear legend_text
-% % annotation(h,'textbox',[0.413 0.38 0.279 0.05],...
-% %     'String',{'n-heptane',...
-% %      '/Air',classnumb_text{k}, '\phi=1'},...
-% %     'FontSize',13,...
-% %     'FontName','Arial',...
-% %     'FitBoxToText','off',...
-% %     'LineStyle','none');
-% % annotation(h,'textbox',[0.25 0.8 0.279 0.05],...
-% %     'String',{' 20 atm'},...
-% %     'FontSize',13,...
-% %     'FontName','Arial',...
-% %     'FitBoxToText','off',...
-% %     'LineStyle','none');
-% 
-% end
-% end
+% annotation(h,'textbox',[0.25 0.8 0.279 0.05],...
+%     'String',{' 20 atm'},...
+%     'FontSize',13,...
+%     'FontName','Arial',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none');
+
+end
+end

@@ -1,7 +1,8 @@
-% clear all
-% close all
+clear all
+close all
 
 % classnumb=[11 15 21 22 23 24 26 27 28];
+classnumb=[15 22 26 27 28];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
@@ -10,18 +11,18 @@ end
 fuel_sim={'modify'};
 
 %% read modification ignition delay time 
-% mechanism={'MFC'};
-% mechanism={'MFC'};
-% date = {'03_06_2017'};
-% fuel_name = {'n_dodecane'};
-% % fuel_name = {'n_heptane'};
-% equi=1;
+mechanism={'MFC'};
+mechanism={'MFC'};
+date = {'03_06_2017'};
+fuel_name = {'n_dodecane'};
+% fuel_name = {'n_heptane'};
+equi=1;
 
 currentloc = 'C:\Users\unghee\Dropbox\post_process';
 
 
 
-% pressure=[20 40];
+pressure=[20 40];
 for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];
 
@@ -34,32 +35,32 @@ load rateParam.mat;
 clear m;
 %% exp data
 
-% addpath('C:\Users\unghee\Dropbox\post_process');
-% real_fuel_ID;
-% pure_component_ID;
-% Target_fuel1 = Vasu_dode_20atm;
-% Target_data1=Target_fuel1(:,5);
-% Temp1 = Target_fuel1(:,2);
-% numbOftarget1 =length(Target_data1);
-% % Temp1=flip(Temp1);
-% % Target_data1=flip(Target_data1);
-% 
-% Target_fuel2 = Shen_dode_40atm;
-% Target_data2=Target_fuel2(:,5);
-% Temp2 = Target_fuel2(:,2);
-% 
-% % Temp2=flip(Temp2);
-% % Target_data2=flip(Target_data2);
-% 
+addpath('C:\Users\unghee\Dropbox\post_process');
+real_fuel_ID;
+pure_component_ID;
+Target_fuel1 = Vasu_dode_20atm;
+Target_data1=Target_fuel1(:,5);
+Temp1 = Target_fuel1(:,2);
+numbOftarget1 =length(Target_data1);
+% Temp1=flip(Temp1);
+% Target_data1=flip(Target_data1);
+
+Target_fuel2 = Shen_dode_40atm;
+Target_data2=Target_fuel2(:,5);
+Temp2 = Target_fuel2(:,2);
+
+% Temp2=flip(Temp2);
+% Target_data2=flip(Target_data2);
+
 % numbOftarget2 =length(Target_data2);
-% 
-% 
+
+
 % Temp = [Temp1; Temp2];
 % Target_data = [Target_data1; Target_data2];
-% % Temp = Temp1;
-% % Target_data = Target_data1;
-% 
-% cd ../../..
+Temp = Temp1;
+Target_data = Target_data1;
+numbOftarget =length(Target_data);
+cd ../../..
 
 
 %% dummy target
@@ -121,7 +122,8 @@ num_cases_modification= size(A,1);
 m=1; % pressure 20atm
 directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
 % for j = range
-for j = 1: numbOftarget.pressure_text{m}
+% for j = 1: numbOftarget.pressure_text{m}
+for j = 1: numbOftarget
     for k = 1: numbOfClass
 % location_modification=[currentloc,'\',mechanism{1},'_','modify','_',date{1},'\',num2str(Temp_un(j))];
     location_modification=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{k},'\',num2str(j)];
@@ -134,8 +136,8 @@ end
 for k = 1: numbOfClass
 %     time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,range);
 %     temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,range); 
-    time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,1: numbOftarget.pressure_text{m});
-    temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,1: numbOftarget.pressure_text{m}); 
+    time_modification.(class_numb_text{k})=time_modification.(class_numb_text{k})(:,1: numbOftarget);
+    temp_modification.(class_numb_text{k})=temp_modification.(class_numb_text{k})(:,1: numbOftarget); 
 end
 
 % m =2 ; % pressure 40atm
