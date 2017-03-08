@@ -127,6 +127,12 @@ num_cases_text = {};
 for k=1:num_cases(1)
     num_cases_text=[num_cases_text ['numcases',num2str(k)]];
 end
+classnumb=[15 22 26 27 28];
+numbOfClass = length(classnumb);
+class_numb_text = {};
+for k=1:numbOfClass
+    class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
+end
 for k = 1: length(pressure)
 
 h3=figure('position',[20 50 580 480]);
@@ -190,7 +196,7 @@ legend_text{3}=['MFC ',pressure_text{k},', after optimize'];
     
      semilogy(sim.(mechanism{1}).(fuel_sim{1}).(pressure_text{k}).table.data(:,6),...
      sim.(mechanism{1}).(fuel_sim{1}).(pressure_text{k}).table.data(:,10),...
-     'b--','markersize',marker_size)
+     'b','markersize',marker_size)
    
 
 
@@ -206,43 +212,50 @@ hold on
     semilogy(Shen_dode_40atm(:,2),Shen_dode_40atm(:,5),'r*','markersize',marker_size)
     end
 %% upper bound & lowerbond
-%     hold on
-% 
-% 
-%     load('simulation_result_modify_20atm_phi_1.mat')
-%     fuel_sim={'modify'};
-% 
-% 
-% %     for j=1:length(fuel_sim)
-% %         for q= 1: num_cases(k)
-% %         semilogy(sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,6),...
-% %         sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,10),...
-% %         'bo','markersize',marker_size);
-% %         end
-% %     end
-% %     hold on;
-% 
-%  x=[]; y=[];
-%     for j=1:length(fuel_sim)
-%         for q= 1: num_cases(k)
-%         x(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(1,6);
-%         y(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(4,10);
-%                    
-%             
-%         end
-%     end
-%      semilogy(x,y,'k','markersize',marker_size,'LineWidth',1.5);
-%  x=[]; y=[];
-%     for j=1:length(fuel_sim)
-%         for q= 1: num_cases(k)
-%         x(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(1,6);
-%         y(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(7,10);
-%                    
-%             
-%         end
-%     end
-%      semilogy(x,y,'k','markersize',marker_size,'LineWidth',1.5);    
+    hold on
 
+
+    load('simulation_result_modify_20atm_phi_1.mat')
+    fuel_sim={'modify'};
+
+
+%     for j=1:length(fuel_sim)
+%         for q= 1: num_cases(k)
+%         semilogy(sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,6),...
+%         sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,10),...
+%         'bo','markersize',marker_size);
+%         end
+%     end
+%     hold on;
+
+ x.(class_numb_text{1})=[]; y.(class_numb_text{1})=[];
+    for j=1:length(fuel_sim)
+        for q= 1: num_cases(k)
+            for m = 1: length(classnumb) 
+        x.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(1,6);
+        y.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(4,10);
+            end
+            
+        end
+    end
+    for m = 1: length(classnumb) 
+%      semilogy(x.(class_numb_text{m}),y.(class_numb_text{m}),'k','markersize',marker_size,'LineWidth',1.5);
+     hold on;
+    end
+ x.(class_numb_text{1})=[]; y.(class_numb_text{1})=[];
+    for j=1:length(fuel_sim)
+        for q= 1: num_cases(k)
+            for m = 1: length(classnumb)
+        x.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(1,6);
+        y.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(7,10);
+            end
+            
+        end
+    end
+        for m = 1: length(classnumb) 
+%      semilogy(x.(class_numb_text{m}),y.(class_numb_text{m}),'k','markersize',marker_size,'LineWidth',1.5);  
+     hold on;
+        end
 %%    
     legend(legend_text,'location','SouthEast','interpreter','none')
     legend('boxoff')
@@ -252,7 +265,7 @@ hold on
     % clear legend_text
     annotation(h3,'textbox',[0.413 0.38 0.279 0.05],...
     'String',{'n-dodecane',...
-     '/Air','one class', '\phi=1'},...
+     '/Air','class 2, 6, 7, 8, 9', '\phi=1'},...
     'FontSize',13,...
     'FontName','Arial',...
     'FitBoxToText','off',...

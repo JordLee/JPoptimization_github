@@ -45,8 +45,11 @@ for m = 1 : numbOfPressure
      end
 
 
-    temp=700:25:1300;
-    h =25;
+%     temp=700:25:1300;
+%     h =25;
+ temp=Temp1;
+ h = numbOftarget1;
+ 
     tbase = sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,:); % when base
     tk1 = sensitivity.(pressure_text{m}).(classnumb_text{k}).data(2,:); % when k = 2
     tk2 = sensitivity.(pressure_text{m}).(classnumb_text{k}).data(3,:); % when k = 0.5

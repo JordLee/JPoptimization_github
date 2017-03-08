@@ -12,7 +12,7 @@ fuel_sim={'modify'};
 %% read modification ignition delay time 
 mechanism={'MFC'};
 mechanism={'MFC'};
-date = {'03_06_2017'};
+date = {'03_06_2017_increased'};
 fuel_name = {'n_dodecane'};
 % fuel_name = {'n_heptane'};
 equi=1;

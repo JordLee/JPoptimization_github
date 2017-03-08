@@ -63,7 +63,7 @@ ModStart = 0;
 
 mechanism='MFC';
 fuel_name='n_dodecane';
-date = '03_06_2017';
+date = '03_06_2017_increased';
 
 class_numb=[15 22 26 27 28];
 numbOfClass = length(class_numb);
