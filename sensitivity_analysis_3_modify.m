@@ -36,7 +36,7 @@ num_cases_modification= 3;
 for m = 1 : numbOfPressure
 
     for k = 1 :1
-     for j = 1: 25
+     for j = 1: numbOftarget1
         location_modification=['C:\Users\unghee\Dropbox\post_process','\',mechanism{1},'\',fuel_name{1},'_',num2str(pressure(m)),...
         'atm','_','phi',num2str(equi),'_',date{1},'\',fuel_sim{1},'\',classnumb_text{k},'\',num2str(j)];
         time_struct_modification=read_ignition_delay(location_modification,num_cases_modification);

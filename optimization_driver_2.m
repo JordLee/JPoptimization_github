@@ -27,8 +27,8 @@ Target_data = [Target_data1; Target_data2];
 %% sensitivity
 addpath('C:\Users\unghee\Dropbox\JPoptimization_github');
 % sensitivity_analysis_3;
-sensitivity_analysis_modify;
-clearvars -except sensitivity classnumb classnumb_text pressure_text pressure mechanism fuel_name date fuel_sim equi
+sensitivity_analysis_3_modify;
+% clearvars -except sensitivity classnumb classnumb_text pressure_text pressure mechanism fuel_name date fuel_sim equi
 
 m =1;
 disp('looking at sensitivity at one pressure condition')
