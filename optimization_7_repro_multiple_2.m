@@ -165,6 +165,14 @@ UB =[UB rateParam.('class6')(1,1)*10 rateParam.('class6')(1,2)+2000 ];
 end
 
 % ndodecane
+if strcmp(mechanism{1},'MFC') && ismember(11,classnumb)
+LB =[LB rateParam.('class11')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class11')(1,1)*10 rateParam.('class11')(1,2)+2000 ];
+end
+if strcmp(mechanism{1},'MFC') && ismember(15,classnumb)
+LB =[LB rateParam.('class15')(1,1)*0.13 0 ];
+UB =[UB rateParam.('class15')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+end
 if strcmp(mechanism{1},'MFC') && ismember(21,classnumb)
 LB =[LB rateParam.('class21')(1,1)*0.13 0 ];
 UB =[UB rateParam.('class21')(1,1)*10 rateParam.('class21')(1,2)+2000 ];
@@ -180,14 +188,6 @@ end
 if strcmp(mechanism{1},'MFC') && ismember(24,classnumb)
 LB =[LB rateParam.('class24')(1,1)*0.13 0 ];
 UB =[UB rateParam.('class24')(1,1)*10 rateParam.('class24')(1,2)+2000 ];
-end
-if strcmp(mechanism{1},'MFC') && ismember(11,classnumb)
-LB =[LB rateParam.('class11')(1,1)*0.13 0 ];
-UB =[UB rateParam.('class11')(1,1)*10 rateParam.('class11')(1,2)+2000 ];
-end
-if strcmp(mechanism{1},'MFC') && ismember(15,classnumb)
-LB =[LB rateParam.('class15')(1,1)*0.13 0 ];
-UB =[UB rateParam.('class15')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
 end
 if strcmp(mechanism{1},'MFC') && ismember(26,classnumb)
 LB =[LB rateParam.('class26')(1,1)*0.13 0 ];

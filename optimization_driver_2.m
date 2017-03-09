@@ -36,7 +36,7 @@ class_to_optimize.(pressure_text{m}) = [];
 for k=1:length(classnumb)
 
      if (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sig_avg > 1)...
-             && (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr_avg >= 0.4)
+             && (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr_avg >= 0.38)
         class_to_optimize.(pressure_text{m}) = [class_to_optimize.(pressure_text{m}) classnumb(k)];
      end
 end
