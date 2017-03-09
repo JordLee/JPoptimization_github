@@ -1,7 +1,7 @@
-clear all
-close all
+% clear all
+% close all
 
-classnumb=[15 22 26 27 28];
+% classnumb=[15 22 26 27 28];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
@@ -10,17 +10,17 @@ end
 fuel_sim={'modify'};
 
 %% read modification ignition delay time 
-mechanism={'MFC'};
-mechanism={'MFC'};
-date = {'03_06_2017_increased'};
-fuel_name = {'n_dodecane'};
-% fuel_name = {'n_heptane'};
-equi=1;
+% mechanism={'MFC'};
+% mechanism={'MFC'};
+% date = {'03_06_2017_increased'};
+% fuel_name = {'n_dodecane'};
+% % fuel_name = {'n_heptane'};
+% equi=1;
 
 currentloc = 'C:\Users\unghee\Dropbox\post_process';
 
 
-pressure=[20];
+% pressure=[20];
 for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];
 
@@ -33,13 +33,13 @@ load rateParam.mat;
 clear m;
 %% exp data
 
-addpath('C:\Users\unghee\Dropbox\post_process');
-real_fuel_ID;
-pure_component_ID;
-Target_fuel1 = Vasu_dode_20atm;
-Target_data1=Target_fuel1(:,5);
-Temp1 = Target_fuel1(:,2);
-numbOftarget1 =length(Target_data1);
+% addpath('C:\Users\unghee\Dropbox\post_process');
+% real_fuel_ID;
+% pure_component_ID;
+% Target_fuel1 = Vasu_dode_20atm;
+% Target_data1=Target_fuel1(:,5);
+% Temp1 = Target_fuel1(:,2);
+% numbOftarget1 =length(Target_data1);
 
 
 % Target_fuel2 = Shen_dode_40atm;
@@ -167,23 +167,23 @@ end
 % ndodecane
 if strcmp(mechanism{1},'MFC') && ismember(21,classnumb)
 LB =[LB rateParam.('class21')(1,1)*0.13 0 ];
-UB =[UB rateParam.('class21')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+UB =[UB rateParam.('class21')(1,1)*10 rateParam.('class21')(1,2)+2000 ];
 end
 if strcmp(mechanism{1},'MFC') && ismember(22,classnumb)
 LB =[LB rateParam.('class22')(1,1)*0.13 0 ];
-UB =[UB rateParam.('class22')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+UB =[UB rateParam.('class22')(1,1)*10 rateParam.('class22')(1,2)+2000 ];
 end
 if strcmp(mechanism{1},'MFC') && ismember(23,classnumb)
 LB =[LB rateParam.('class23')(1,1)*0.13 0 ];
-UB =[UB rateParam.('class23')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+UB =[UB rateParam.('class23')(1,1)*10 rateParam.('class23')(1,2)+2000 ];
 end
 if strcmp(mechanism{1},'MFC') && ismember(24,classnumb)
 LB =[LB rateParam.('class24')(1,1)*0.13 0 ];
-UB =[UB rateParam.('class24')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+UB =[UB rateParam.('class24')(1,1)*10 rateParam.('class24')(1,2)+2000 ];
 end
 if strcmp(mechanism{1},'MFC') && ismember(11,classnumb)
 LB =[LB rateParam.('class11')(1,1)*0.13 0 ];
-UB =[UB rateParam.('class11')(1,1)*10 rateParam.('class15')(1,2)+2000 ];
+UB =[UB rateParam.('class11')(1,1)*10 rateParam.('class11')(1,2)+2000 ];
 end
 if strcmp(mechanism{1},'MFC') && ismember(15,classnumb)
 LB =[LB rateParam.('class15')(1,1)*0.13 0 ];
@@ -199,7 +199,7 @@ UB =[UB rateParam.('class27')(1,1)*10 rateParam.('class27')(1,2)+2000 ];
 end
 if strcmp(mechanism{1},'MFC') && ismember(28,classnumb)
 LB =[LB rateParam.('class28')(1,1)*0.13 0 ];
-UB =[UB rateParam.('class28')(1,1)*10 rateParam.('class27')(1,2)+2000 ];
+UB =[UB rateParam.('class28')(1,1)*10 rateParam.('class28')(1,2)+2000 ];
 end
 
 nvars=2*numbOfClass;

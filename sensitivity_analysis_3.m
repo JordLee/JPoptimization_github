@@ -35,7 +35,7 @@ num_cases_modification= 3;
 
 for m = 1 : numbOfPressure
 
-    for k = 1 :1
+    for k = 1 :numbOfClass
      for j = 1: 25
         location_modification=['C:\Users\unghee\Dropbox\post_process','\',mechanism{1},'\',fuel_name{1},'_',num2str(pressure(m)),...
         'atm','_','phi',num2str(equi),'_',date{1},'\',fuel_sim{1},'\',classnumb_text{k},'\',num2str(j)];
@@ -145,7 +145,10 @@ annotation(h,'textbox',[0.213 0.38 0.279 0.05],...
     'FontName','Arial',...
     'FitBoxToText','off',...
     'LineStyle','none');
-
-
+mkdir('sensitivity');
+cd('sensitivity');
+saveas(h,classnumb_text{k},'fig')
+saveas(h,classnumb_text{k},'jpg')
+cd ../
 end
 end

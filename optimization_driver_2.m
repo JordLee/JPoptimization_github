@@ -1,8 +1,8 @@
 clear;
 mechanism={'MFC'};
 fuel_name={'n_dodecane'};
-date = {'03_07_2017'};
-fuel_sim={'modify'};
+date = {'03_06_2017'};
+fuel_sim={'modify_sensitivity'};
 equi = 1;
 classnumb=[11 15 21 22 23 24 26 27 28];
 pressure=[20];
@@ -26,8 +26,8 @@ Target_data = [Target_data1; Target_data2];
 
 %% sensitivity
 addpath('C:\Users\unghee\Dropbox\JPoptimization_github');
-% sensitivity_analysis_3;
-sensitivity_analysis_3_modify;
+sensitivity_analysis_3;
+% sensitivity_analysis_3_modify;
 % clearvars -except sensitivity classnumb classnumb_text pressure_text pressure mechanism fuel_name date fuel_sim equi
 
 m =1;
@@ -36,7 +36,7 @@ class_to_optimize.(pressure_text{m}) = [];
 for k=1:length(classnumb)
 
      if (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sig_avg > 1)...
-             && (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr_avg > 0.5)
+             && (sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr_avg >= 0.4)
         class_to_optimize.(pressure_text{m}) = [class_to_optimize.(pressure_text{m}) classnumb(k)];
      end
 end
@@ -48,8 +48,8 @@ classnumb = class_to_optimize.(pressure_text{m})
 
 
 %% Optimization
-
-clearvars -except classnumb Temp numberOftarget Target_data sensitivity pressure fuel_name
+% classnumb= [26 27]
+clearvars -except classnumb Temp Temp1 Temp2  numberOftarget Target_data Target_data1 numbOftarget1 sensitivity pressure fuel_name equi fuel_name mechanism fuel_sim date
 optimization_7_repro_multiple_2
 
 
