@@ -65,7 +65,7 @@ mechanism='MFC';
 fuel_name='n_dodecane';
 date = '03_08_2017';
 
-class_numb=[11 15 22 24 26 27 28];
+class_numb=[11 15 22 26 27 28];
 numbOfClass = length(class_numb);
 class_numb_text = {};
 for k=1:numbOfClass

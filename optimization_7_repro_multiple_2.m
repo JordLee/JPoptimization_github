@@ -128,8 +128,8 @@ for j = 1 : size(Temp,1)
     
     
 end
-%% plot regression
-
+% plot regression
+% 
 % for k = 1: numbOfClass
 % plotregression(log(time_modification.(class_numb_text{k})(:,1:10)),predictionreg.(class_numb_text{k})(1:10))
 % end
