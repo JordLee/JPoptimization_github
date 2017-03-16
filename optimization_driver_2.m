@@ -1,7 +1,7 @@
 clear;
 mechanism={'MFC'};
 fuel_name={'n_dodecane'};
-date = {'03_08_2017'};
+date = {'03_16_2017_1_iteration'};
 fuel_sim={'modify_sensitivity'};
 equi = 1;
 classnumb=[11 15 21 22 23 24 26 27 28];

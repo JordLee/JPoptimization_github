@@ -2,7 +2,7 @@
 % close all
 
 % classnumb=[15 22 26 27 28];
-classnumb=[11 15 22 26 27 28];
+classnumb=[11 15 22 24 26 27 28];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass

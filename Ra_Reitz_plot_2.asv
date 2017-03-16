@@ -127,12 +127,12 @@ num_cases_text = {};
 for k=1:num_cases(1)
     num_cases_text=[num_cases_text ['numcases',num2str(k)]];
 end
-% classnumb=[22 24 26 28];
-% numbOfClass = length(classnumb);
-% class_numb_text = {};
-% for k=1:numbOfClass
-%     class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
-% end
+classnumb=[22 24 27 28];
+numbOfClass = length(classnumb);
+class_numb_text = {};
+for k=1:numbOfClass
+    class_numb_text=[class_numb_text ['class',num2str(classnumb(k))]];
+end
 for k = 1: length(pressure)
 
 h3=figure('position',[20 50 580 480]);
@@ -212,50 +212,50 @@ hold on
     semilogy(Shen_dode_40atm(:,2),Shen_dode_40atm(:,5),'r*','markersize',marker_size)
     end
 %% upper bound & lowerbond
-%     hold on
-% 
-% 
-%     load('simulation_result_modify_20atm_phi_1.mat')
-%     fuel_sim={'modify'};
-% 
-% 
-% %     for j=1:length(fuel_sim)
-% %         for q= 1: num_cases(k)
-% %         semilogy(sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,6),...
-% %         sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,10),...
-% %         'bo','markersize',marker_size);
-% %         end
-% %     end
-% %     hold on;
-% 
-%  x.(class_numb_text{1})=[]; y.(class_numb_text{1})=[];
+    hold on
+
+
+    load('simulation_result_modify_20atm_phi_1.mat')
+    fuel_sim={'modify'};
+
+
 %     for j=1:length(fuel_sim)
 %         for q= 1: num_cases(k)
-%             for m = 1: length(classnumb) 
-%         x.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(1,6);
-%         y.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(4,10);
-%             end
-%             
+%         semilogy(sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,6),...
+%         sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(num_cases_text{q}).table.data(:,10),...
+%         'bo','markersize',marker_size);
 %         end
 %     end
-%     for m = 1: length(classnumb) 
-% %      semilogy(x.(class_numb_text{m}),y.(class_numb_text{m}),'k','markersize',marker_size,'LineWidth',1.5);
-%      hold on;
-%     end
-%  x.(class_numb_text{1})=[]; y.(class_numb_text{1})=[];
-%     for j=1:length(fuel_sim)
-%         for q= 1: num_cases(k)
-%             for m = 1: length(classnumb)
-%         x.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(1,6);
-%         y.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(7,10);
-%             end
-%             
-%         end
-%     end
-%         for m = 1: length(classnumb) 
-% %      semilogy(x.(class_numb_text{m}),y.(class_numb_text{m}),'k','markersize',marker_size,'LineWidth',1.5);  
-%      hold on;
-%         end
+%     hold on;
+
+ x.(class_numb_text{1})=[]; y.(class_numb_text{1})=[];
+    for j=1:length(fuel_sim)
+        for q= 1: num_cases(k)
+            for m = 1: length(classnumb) 
+        x.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(1,6);
+        y.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(4,10);
+            end
+            
+        end
+    end
+    for m = 1: length(classnumb) 
+%      semilogy(x.(class_numb_text{m}),y.(class_numb_text{m}),'k','markersize',marker_size,'LineWidth',1.5);
+     hold on;
+    end
+ x.(class_numb_text{1})=[]; y.(class_numb_text{1})=[];
+    for j=1:length(fuel_sim)
+        for q= 1: num_cases(k)
+            for m = 1: length(classnumb)
+        x.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(1,6);
+        y.(class_numb_text{m})(q)=sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).(class_numb_text{m}).(num_cases_text{q}).table.data(7,10);
+            end
+            
+        end
+    end
+        for m = 1: length(classnumb) 
+%      semilogy(x.(class_numb_text{m}),y.(class_numb_text{m}),'k','markersize',marker_size,'LineWidth',1.5);  
+     hold on;
+        end
 %%    
     legend(legend_text,'location','SouthEast','interpreter','none')
     legend('boxoff')

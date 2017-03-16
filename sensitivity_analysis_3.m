@@ -145,6 +145,10 @@ annotation(h,'textbox',[0.213 0.38 0.279 0.05],...
     'FontName','Arial',...
     'FitBoxToText','off',...
     'LineStyle','none');
+
+% location_save=[currentloc,'\',mechanism{1},'\',directory];
+% cd(location_save)
+
 mkdir('sensitivity');
 cd('sensitivity');
 saveas(h,classnumb_text{k},'fig')
