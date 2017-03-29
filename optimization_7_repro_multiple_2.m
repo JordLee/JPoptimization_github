@@ -2,7 +2,7 @@
 % close all
 
 % classnumb=[15 22 26 27 28];
-classnumb=[11 15 22 24 26 27 28];
+% classnumb=[11 15 22 24 26 27 28];
 numbOfClass = length(classnumb);
 class_numb_text = {};
 for k=1:numbOfClass
@@ -12,11 +12,11 @@ fuel_sim={'modify'};
 
 %% read modification ignition delay time 
 % mechanism={'MFC'};
-% mechanism={'MFC'};
-% date = {'03_06_2017_increased'};
-% fuel_name = {'n_dodecane'};
-% % fuel_name = {'n_heptane'};
-% equi=1;
+mechanism={'MFC'};
+date = {'03_16_2017_1_iteration'};
+fuel_name = {'n_dodecane'};
+% fuel_name = {'n_heptane'};
+equi=1;
 
 currentloc = 'C:\Users\unghee\Dropbox\post_process';
 
@@ -122,7 +122,7 @@ for j = 1 : size(Temp,1)
     coefs.(class_numb_text{k})(j,:)=coefs_element;
 
     prediction.(class_numb_text{k}){:,j}=M*coefs_element'-d;
-    predictionreg.(class_numb_text{k}){:,j}=M*coefs_element';
+%     predictionreg.(class_numb_text{k}){:,j}=M*coefs_element';
 %     plotregression(d,M*coefs_element')
     end
     
@@ -218,6 +218,7 @@ end
 
 location_save=[currentloc,'\',mechanism{1},'\',directory];
 cd(location_save)
+cd ../
 
 save('final_result.mat','final_result')
 

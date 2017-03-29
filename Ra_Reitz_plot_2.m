@@ -170,17 +170,17 @@ legend_text{3}=['MFC ',pressure_text{k},', after optimize'];
 
 
 
-
-    hold on
-
-     load('simulation_result_afteroptimize_20atm_phi_1.mat')
-    fuel_sim={'afteroptimize'};
-
-     for j=1:length(fuel_sim)
-        semilogy(sim.(mechanism{i}).(fuel_sim{1}).(pressure_text{k}).table.data(:,6),...
-        sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).table.data(:,10),...
-        'k--','markersize',marker_size)
-     end
+% 
+%     hold on
+% 
+%      load('simulation_result_afteroptimize_20atm_phi_1.mat')
+%     fuel_sim={'afteroptimize'};
+% 
+%      for j=1:length(fuel_sim)
+%         semilogy(sim.(mechanism{i}).(fuel_sim{1}).(pressure_text{k}).table.data(:,6),...
+%         sim.(mechanism{i}).(fuel_sim{j}).(pressure_text{k}).table.data(:,10),...
+%         'k--','markersize',marker_size)
+%      end
 
 
 
@@ -203,7 +203,7 @@ legend_text{3}=['MFC ',pressure_text{k},', after optimize'];
 
 
 
-hold on
+%     hold on
 % 
 %  semilogy(Shen_hep_40atm(:,2),Shen_hep_40atm(:,3),'r*','markersize',marker_size)
     if strcmp(pressure_text{k},'P20atm')

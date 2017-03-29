@@ -1,5 +1,5 @@
 
-% clear all;
+clear all;
 %% Import data from text file.
 % Script for importing data from the following text file:
 %
@@ -63,10 +63,10 @@ ModStart = 0;
 
 mechanism='MFC';
 fuel_name='n_dodecane';
-date = '03_16_2017_1_iteration';
+date = '03_23_2017_1_iteration';
 
-% class_numb=[22 24 26 27];
-class_numb=classnumb;
+class_numb=[11 15 22 24 26 27 28];
+% class_numb=classnumb;
 numbOfClass = length(class_numb);
 class_numb_text = {};
 for k=1:numbOfClass

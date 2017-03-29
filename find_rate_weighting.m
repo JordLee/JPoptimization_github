@@ -29,13 +29,15 @@ for j= 1: length(Temp)
      time_weight_differ(j,i)= W*abs(log10(Target_data(j))-log10(exp(time(j,i))));
      
      timeTotal(j)=time_weight_differ(j,i)+timeTotal(j); % sum up class
-    
+%        timeTotal(j)= time(j,i) +timeTotal(j);
 %      X(3*i)
      
      end
-     
+%      differ_tempj =W*abs(log10(Target_data(j))-log10(exp(timeTotal(j))));
            
      differTotal = timeTotal(j) + differTotal; % sum up Temp
+
+%     differTotal = differ_tempj + differTotal; % sum up Temp
 end
 
     
