@@ -16,7 +16,7 @@ currentFolder = pwd;
 cd(pwd);
 % cd mechanisms/;
 % filename = 'mech_ERC-MultiChem+Bio_Brakora2012_base.inp';
-filename = 'MFC_base.inp';
+filename = 'MFC_n_dodecane_class11_class15_class22_class24_class26_class27_class28_afteroptimize.inp';
 delimiter = ' ';
 
 %% Read columns of data as strings:
@@ -63,9 +63,9 @@ ModStart = 0;
 
 mechanism='MFC';
 fuel_name='n_dodecane';
-date = '03_23_2017_1_iteration';
+date = '03_23_2017_2_iteration';
 
-class_numb=[11 15 22 24 26 27 28];
+class_numb=[11 22 24 26 27];
 % class_numb=classnumb;
 numbOfClass = length(class_numb);
 class_numb_text = {};
