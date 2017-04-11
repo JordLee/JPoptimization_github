@@ -1,5 +1,4 @@
-
-clear all;
+function modification_afteroptimize_github_func(filename,mechanism,fuel_name,iteration_numb) 
 %% Import data from text file.
 % Script for importing data from the following text file:
 %
@@ -16,7 +15,7 @@ currentFolder = pwd;
 cd(pwd);
 % cd mechanisms/;
 % filename = 'mech_ERC-MultiChem+Bio_Brakora2012_base.inp';
-filename = 'MFC_base.inp';
+% filename = 'MFC_base.inp';
 delimiter = ' ';
 
 %% Read columns of data as strings:
@@ -61,10 +60,10 @@ rawCellColumns2=rawCellColumns;
 
 ModStart = 0;
 
-mechanism='MFC';
-fuel_name='n_dodecane';
+% mechanism='MFC';
+% fuel_name='n_dodecane';
 date = '03_23_2017_1_iteration';
-iteration_numb = 1;
+% iteration_numb = 1;
 class_numb=[11 15 22 24 26 27 28];
 % class_numb=classnumb;
 numbOfClass = length(class_numb);
@@ -212,6 +211,9 @@ output = cell(size(rawCellColumns2,1),size(rawCellColumns2,2));
 
 
 fclose(fileID);
+
+end
+
 
 end
 % exit
