@@ -1,0 +1,74 @@
+#PBS -A engin_flux
+#PBS -M unghee@umich.edu
+#PBS -m abe
+#PBS -V
+#PBS -N Ra_Reitz
+#PBS -l walltime=6:20:00,pmem=2500mb,procs=1
+#PBS -l qos=flux
+#PBS -q flux
+#PBS -t 1-25
+#PBS -joe
+
+
+cd $PBS_O_WORKDIR
+echo $PBS_O_WORKDIR
+#DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#echo $DIR
+
+##setting 
+# check matlab setting as well!!
+fuel_name="n_dodecane"
+pressure="20"
+equi="1"
+matlabdate="03_23_2017_2_iteration"
+#numbOfTemp=25;
+mechanism="MFC";
+class_name="class11_class15_class22_class24_class26_class27_class28";
+file_name="${mechanism}_${fuel_name}_${class_name}_afteroptimize.inp";
+#file_name="${mechanism}_base.inp";
+##
+
+cd /scratch/engin_flux/unghee/chemkin/${mechanism}/${fuel_name}_${pressure}atm_phi${equi}_${matlabdate}
+
+mkdir modify_sensitivity_4
+cd modify_sensitivity_4
+
+#echo "running modifcation.m"
+#cp /scratch/engin_flux/unghee/chemkin/mechanisms/${mechanism}_base.inp ./
+cp /scratch/engin_flux/unghee/chemkin/${mechanism}/${fuel_name}_${pressure}atm_phi${equi}_${matlabdate}/output/${file_name} ./
+#cp /scratch/engin_flux/unghee/chemkin/modification.m ./
+#matlab -nodisplay -r modification
+cp /scratch/engin_flux/unghee/chemkin/modification_func.m ./
+echo $file_name
+#matlab -nodisplay -r "modification_func('${file_name}','${mechanism}','${fuel_name}')"
+
+
+for i in 11 15 21 22 23 24 26 27 28
+#for i in 11
+do
+
+mkdir class$i
+cd class$i
+
+
+
+
+#	for j in $(seq 1 ${numbOfTemp})
+#	for j in $(seq 1 1)
+#	do
+
+#	mkdir $j
+	mkdir ${PBS_ARRAYID}
+#	cd $j
+	cd ${PBS_ARRAYID}
+	cp /scratch/engin_flux/unghee/chemkin/case_chemkinrun.pbs ./
+#	qsub -v casenumber=$j fuel_name="${fuel_name}" pressure=$pressure equi=$equi matlabdate=$matlabdate mechanism=$mechanism case_chemkinrun.pbs
+#	qsub -v casenumber=$j,fuel_name=\"${fuel_name}\" case_chemkinrun.pbs
+	qsub -v casenumber=${PBS_ARRAYID},fuel_name=${fuel_name},pressure=${pressure},equi=${equi},matlabdate=${matlabdate},mechanism=${mechanism},classnumb=${i} case_chemkinrun.pbs
+	cd ..
+#	done
+	
+cd ..
+
+done
+

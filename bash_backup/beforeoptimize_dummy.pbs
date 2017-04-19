@@ -1,0 +1,58 @@
+#PBS -A jmartz_flux
+#PBS -M unghee@umich.edu
+#PBS -m abe
+#PBS -V
+#PBS -N Ra_Reitz
+#PBS -l walltime=00:10:00,pmem=2500mb,procs=1
+#PBS -l qos=flux
+#PBS -q flux
+#PBS -t 1-25
+#PBS -joe
+
+cd $PBS_O_WORKDIR
+
+
+##setting 
+pressure="20"
+mechanism="Ra_Reitz";
+fuel_name="n_heptane";
+class_name="class2_class4_class6_moderate";
+equi="1";
+matlabdate="01_30_2017"
+##
+
+
+## access and make file
+
+
+cd /scratch/engin_flux/unghee/chemkin/${mechanism}/${fuel_name}_${pressure}atm_phi${equi}_${matlabdate}
+
+
+mkdir beforeoptimize_dummy
+cd beforeoptimize_dummy
+##
+
+
+
+##calculate chemkin
+
+	echo " calcultating temp ${PBS_ARRAYID} "
+	mkdir ck_${PBS_ARRAYID}
+	cd ck_${PBS_ARRAYID}
+
+
+	cp /scratch/engin_flux/unghee/chemkin/${mechanism}/${fuel_name}_${pressure}atm_phi${equi}_${matlabdate}/result/${PBS_ARRAYID}/${mechanism}_${fuel_name}.inp ./
+	cp /scratch/engin_flux/unghee/chemkin/mechanisms/${mechanism}_${fuel_name}_${class_name}.inp ./
+	cp /scratch/engin_flux/unghee/chemkin/mechanisms/${mechanism}_therm.dat ./
+	cp /scratch/engin_flux/unghee/chemkin/chemkindata.dtd ./
+
+
+	$CHEMKIN_BIN/chem -i ${mechanism}_${fuel_name}_${class_name}.inp -o ${mechanism}_chem.out -d ${mechanism}_therm.dat
+	$CHEMKIN_BIN/CKReactorGenericClosed -i ${mechanism}_${fuel_name}.inp -o ${mechanism}_reg.out
+	$CHEMKIN_BIN/GetSolution
+	$CHEMKIN_BIN/CKSolnTranspose
+	cd ..
+
+
+
+

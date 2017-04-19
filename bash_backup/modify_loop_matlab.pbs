@@ -1,0 +1,51 @@
+#PBS -A jmartz_flux
+#PBS -M unghee@umich.edu
+#PBS -m abe
+#PBS -V
+#PBS -N Ra_Reitz
+#PBS -l walltime=6:20:00,pmem=2500mb,procs=3
+#PBS -l qos=flux
+#PBS -q flux
+#PBS -t 11,15,21,22,23,24,26,27,28
+#PBS -joe
+
+
+cd $PBS_O_WORKDIR
+echo $PBS_O_WORKDIR
+#DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#echo $DIR
+
+##setting 
+# check matlab setting as well!!
+fuel_name="n_dodecane"
+pressure="20"
+equi="1"
+matlabdate="03_23_2017_1_iteration"
+#numbOfClass=2
+#classnumb="class6"
+#class_name="class26_class27";
+numbOfTemp=26;
+mechanism="MFC";
+##
+
+cd /scratch/engin_flux/unghee/chemkin/${mechanism}/${fuel_name}_${pressure}atm_phi${equi}_${matlabdate}
+
+mkdir modify
+cd modify
+
+echo "running modifcation.m"
+cp /scratch/engin_flux/unghee/chemkin/mechanisms/${mechanism}_base.inp ./
+#cp /scratch/engin_flux/unghee/chemkin/${mechanism}/${fuel_name}_${pressure}atm_phi${equi}_${matlabdate}/output/${mechanism}_${fuel_name}_${class_name}_afteroptimize.inp ./
+cp /scratch/engin_flux/unghee/chemkin/modification.m ./
+matlab -nodisplay -r modification
+
+
+
+
+mkdir class${PBS_ARRAYID}
+cd class${PBS_ARRAYID}
+
+
+
+
+

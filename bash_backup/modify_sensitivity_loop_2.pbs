@@ -1,0 +1,79 @@
+#PBS -A jmartz_flux
+#PBS -M unghee@umich.edu
+#PBS -m abe
+#PBS -V
+#PBS -N Ra_Reitz
+#PBS -l walltime=6:20:00,pmem=2500mb,procs=1
+#PBS -l qos=flux
+#PBS -q flux
+#PBS -t 1-7
+#PBS -joe
+
+
+cd $PBS_O_WORKDIR
+echo $PBS_O_WORKDIR
+#DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#echo $DIR
+
+##setting 
+# check matlab setting as well!!
+fuel_name="n_dodecane"
+pressure="20"
+equi="1"
+matlabdate="03_16_2017_5_iteration"
+class_name="class22_class24_class26_class27";
+numbOfTemp=25;
+mechanism="MFC";
+##
+
+cd /scratch/engin_flux/unghee/chemkin/${mechanism}/${fuel_name}_${pressure}atm_phi${equi}_${matlabdate}
+
+mkdir modify_sensitivity_2
+cd modify_sensitivity_2
+
+echo "running modifcation.m"
+cp /scratch/engin_flux/unghee/chemkin/mechanisms/${mechanism}_base.inp ./
+cp /scratch/engin_flux/unghee/chemkin/${mechanism}/${fuel_name}_${pressure}atm_phi${equi}_${matlabdate}/output/${mechanism}_${fuel_name}_${class_name}_afteroptimize.inp ./
+cp /scratch/engin_flux/unghee/chemkin/modification.m ./
+matlab -nodisplay -r modification
+
+
+
+for i in 23 24
+do
+
+mkdir class$i
+cd class$i
+
+
+
+
+	for j in $(seq 1 ${numbOfTemp})
+	do
+
+	mkdir $j
+
+	cd $j
+
+		echo " calcultating v ${PBS_ARRAYID} "
+		mkdir ck_${PBS_ARRAYID}
+		cd ck_${PBS_ARRAYID}
+
+		cp /scratch/engin_flux/unghee/chemkin/${mechanism}/${fuel_name}_${pressure}atm_phi${equi}_${matlabdate}/modify_sensitivity_2/${mechanism}_${fuel_name}_class${i}_v_${PBS_ARRAYID}.inp ./
+		cp /scratch/engin_flux/unghee/chemkin/${mechanism}/${fuel_name}_${pressure}atm_phi${equi}_${matlabdate}/result/$j/${mechanism}_${fuel_name}.inp ./
+		cp /scratch/engin_flux/unghee/chemkin/mechanisms/${mechanism}_therm.dat ./
+		cp /scratch/engin_flux/unghee/chemkin/chemkindata.dtd ./
+
+		$CHEMKIN_BIN/chem -i ${mechanism}_${fuel_name}_class${i}_v_${PBS_ARRAYID}.inp -o ${mechanism}_chem.out -d ${mechanism}_therm.dat
+		$CHEMKIN_BIN/CKReactorGenericClosed -i ${mechanism}_${fuel_name}.inp -o ${mechanism}_reg.out
+		$CHEMKIN_BIN/GetSolution
+		$CHEMKIN_BIN/CKSolnTranspose
+		cd ..
+
+	cd ..
+	done
+	
+cd ..
+
+done
+
