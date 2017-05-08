@@ -60,21 +60,21 @@ locationClass = [A B];
 rawCellColumns2=rawCellColumns;
 
 ModStart = 0;
-
+%%%%%%%%%%%%%%%%%%%%%%%% setting
 mechanism='MFC';
 fuel_name='n_dodecane';
 date = '04_29_2017';
 iteration_numb = 1;
-class_numb=[11 15 22 24 26 27 28];
-% class_numb=classnumb;
+class_numb=[11 15 22 24 26 27 28];   % classes which have been optimized : this value should be changed manually by the user
+pressure=[20];
+equi=1;
+%%%%%%%%%%%%%%%%%%%%%%%%
 numbOfClass = length(class_numb);
 class_numb_text = {};
 for k=1:numbOfClass
-%     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
     class_numb_text=[class_numb_text ['class',num2str(class_numb(k))]];
 end
-pressure=[20];
-equi=1;
+
 for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];
 
@@ -93,6 +93,7 @@ for i=1 : rowCellNumber
               
               
               for k = 1: numbOfClass
+%% User should add if condition in order to add more classes.
 %                if   class_numb(k) == 1 & (strfind(rawCellColumns{i,j},'nc7h16+h=') == 1)... % n heptane erc
 %                          & isempty((strfind(rawCellColumns{i},'!')) == 0)& (ModStart == 1)...
 %                      |(class_numb(k) == 2 & (strfind(rawCellColumns{i,j},'nc7h16+oh=') == 1)...
@@ -110,7 +111,8 @@ for i=1 : rowCellNumber
 %                      |(class_numb(k) == 8 & (strfind(rawCellColumns{i,j},'c5h11co=') == 1)...
 %                          & isempty((strfind(rawCellColumns{i},'!')) == 0)& (ModStart == 1))...    
 %                      |(class_numb(k) == 9 & (strfind(rawCellColumns{i,j},'c7h15-2=') == 1)...
-%                          & isempty((strfind(rawCellColumns{i},'!')) == 0)& (ModStart == 1))...              
+%                          & isempty((strfind(rawCellColumns{i},'!')) == 0)& (ModStart == 1))...    
+%%
                 if  class_numb(k) == 27 & (strfind(rawCellColumns{i,j},'C12OOH') ~= 0)... % n dodecane ske_361
                          & (isempty(strfind(rawCellColumns{i,j},'O2=C12KET')) == 0)...
                          & (isempty(strfind(rawCellColumns{i},'!')) == 1)& (ModStart == 1)...   
@@ -159,15 +161,14 @@ for i=1 : rowCellNumber
 end 
          
 %%
-% datename = '01_19_2017'
-% save_filename=[mechanism,'_','output','_',datename];
+
 
 
 save_filename='output';
 
 for k = 1 :length(pressure)
 directory=['C:\Users\unghee\Dropbox\post_process','\',mechanism,'\',fuel_name,'_',pressure_text{k},'_','phi',num2str(equi),'_',date];
-% location=[currentloc,'\',mechanism,'\',directory];
+
 cd(directory)
 
 mkdir(save_filename);
@@ -175,10 +176,10 @@ cd(save_filename);
 
 class_numb_text = [];
 for k=1:numbOfClass
-%     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
+
     class_numb_text=[class_numb_text '_' ['class',num2str(class_numb(k))]];
 end
-% file_name=[mechanism,'_',fuel_name,class_numb_text,'_','afteroptimize','.inp'];
+
 file_name=[mechanism,'_','afteroptimize','_',num2str(iteration_numb),'_','iteration','.inp'];
 fileID = fopen(file_name,'w');
 output = cell(size(rawCellColumns2,1),size(rawCellColumns2,2));
@@ -214,8 +215,8 @@ output = cell(size(rawCellColumns2,1),size(rawCellColumns2,2));
 fclose(fileID);
 
 end
-% exit
-%type mech_ERC-MultiChem+Bio_Brakora2012_v1_test.inp
+% exit  %this should be uncommented when running in FLUX environment
+
 
 %% Clear temporary variables
 % clearvars filename delimiter formatSpec fileID dataArray ans raw col numericData rawCellColumns rawNumericColumns R;
