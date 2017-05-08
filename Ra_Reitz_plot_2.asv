@@ -6,7 +6,7 @@ mechanism={'MFC' };
 
 pressure=[40];
 phi=1;
-iteration_numb=3;
+iteration_numb=2;
 for k=1:length(pressure)
     pressure_text{k}=['P',num2str(pressure(k)),'atm'];
 
@@ -160,15 +160,12 @@ clear legend_text
 
 legend_text{1}=['MFC ',pressure_text{k},', ','beforeoptimize'];
     if strcmp(pressure_text{k},'P20atm')
-%         legend_text{2}=['Vasu, ',pressure_text{k},', ','target'];
-        legend_text{3}=['exp, ',pressure_text{k},', ','target'];
-
+        legend_text{2}=['Vasu, ',pressure_text{k},', ','target'];
     else
-%         legend_text{2}=['Shen, ',pressure_text{k},', ','target'];
-        legend_text{3}=['exp, ',pressure_text{k},', ','target'];
+        legend_text{2}=['Shen, ',pressure_text{k},', ','target'];
     end
     
-legend_text{2}=['MFC ',pressure_text{k},', after optimize'];
+legend_text{3}=['MFC ',pressure_text{k},', after optimize'];
 
 % load('simulation_result_beforeoptimize_dummy_class2_class4_class6_moderate_20atm_phi_1.mat')
 % fuel_sim={'beforeoptimize_dummy_class2_class4_class6_moderate'};
@@ -216,7 +213,7 @@ legend_text{2}=['MFC ',pressure_text{k},', after optimize'];
      'b','markersize',marker_size)
    
 
-ylim([0 10^5]);
+
 
 
 
@@ -224,15 +221,9 @@ ylim([0 10^5]);
 % 
 %  semilogy(Shen_hep_40atm(:,2),Shen_hep_40atm(:,3),'r*','markersize',marker_size)
     if strcmp(pressure_text{k},'P20atm')
-%     semilogy(Vasu_dode_20atm(:,2),Vasu_dode_20atm(:,5),'r*','markersize',marker_size) % pure dodecane
-    semilogy(Vasu_20atm(:,2),Vasu_20atm(:,5),'r^','markersize',marker_size,'markerface','r') 
-    hold on;
-    semilogy(Wang_20atm(:,2),Wang_20atm(:,5),'r^','markersize',marker_size,'markerface','r') 
-    hold on;
-    semilogy(Dooley_20atm(:,2),Dooley_20atm(:,5),'r^','markersize',marker_size,'markerface','r') 
+    semilogy(Vasu_dode_20atm(:,2),Vasu_dode_20atm(:,5),'r*','markersize',marker_size) % pure dodecane
     else
-%     semilogy(Shen_dode_40atm(:,2),Shen_dode_40atm(:,5),'r*','markersize',marker_size)% pure dodecane
-    semilogy(Wang_40atm(:,2),Wang_40atm(:,5),'rd','markersize',marker_size,'markerface','r')
+    semilogy(Shen_dode_40atm(:,2),Shen_dode_40atm(:,5),'r*','markersize',marker_size)
     end
 %% upper bound & lowerbond
 %     hold on
@@ -287,8 +278,8 @@ ylim([0 10^5]);
     % axis([0.7 1.6 20 40000])
     % clear legend_text
     annotation(h3,'textbox',[0.413 0.38 0.279 0.05],...
-    'String',{'JetA',...
-     '/Air', '\phi=1'},...
+    'String',{'n-dodecane',...
+     '/Air','class', '\phi=1'},...
     'FontSize',13,...
     'FontName','Arial',...
     'FitBoxToText','off',...

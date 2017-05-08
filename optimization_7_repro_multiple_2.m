@@ -13,10 +13,10 @@ fuel_sim={'modify'};
 %% read modification ignition delay time 
 % mechanism={'MFC'};
 mechanism={'MFC'};
-date = {'03_16_2017_1_iteration'};
-fuel_name = {'n_dodecane'};
+% date = {'03_16_2017_1_iteration'};
+% fuel_name = {'n_dodecane'};
 % fuel_name = {'n_heptane'};
-equi=1;
+% equi=1;
 
 currentloc = 'C:\Users\unghee\Dropbox\post_process';
 
@@ -28,7 +28,8 @@ for k=1:length(pressure)
 end
 m = 1;
 directory=[fuel_name{1},'_',pressure_text{m},'_','phi',num2str(equi),'_',date{1}];
-location_rateParam=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{1}];
+% location_rateParam=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1},'\',class_numb_text{1}];
+location_rateParam=[currentloc,'\',mechanism{1},'\',directory,'\',fuel_sim{1}];
 cd(location_rateParam)
 load rateParam.mat;
 clear m;

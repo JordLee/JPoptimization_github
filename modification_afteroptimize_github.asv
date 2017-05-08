@@ -16,7 +16,7 @@ currentFolder = pwd;
 cd(pwd);
 % cd mechanisms/;
 % filename = 'mech_ERC-MultiChem+Bio_Brakora2012_base.inp';
-filename = 'MFC_base.inp';
+filename = 'MFC_afteroptimize_1_iteration.inp';
 delimiter = ' ';
 
 %% Read columns of data as strings:
@@ -73,7 +73,7 @@ for k=1:numbOfClass
 %     classnumb_text{classnumb(k)}=['class',num2str(classnumb(k))];
     class_numb_text=[class_numb_text ['class',num2str(class_numb(k))]];
 end
-pressure=[20];
+pressure=[0];
 equi=1;
 for k=1:length(pressure)
     pressure_text{k}=[num2str(pressure(k)),'atm'];

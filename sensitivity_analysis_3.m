@@ -98,61 +98,61 @@ end
 save('sensitivity.mat','sensitivity')
 
 %% plotting
-for m = 1 : numbOfPressure
-for k = 1 : numbOfClass
-h=figure('position',[20 50 1200 480]);
-subplot(1,2,1);
-set(gca,'Fontsize',13)
-semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,:)/1000,'k-','markersize',marker_size);
-hold on
-semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(2,:)/1000,'rs-','markersize',marker_size);
-hold on
-semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(3,:)/1000,'bx-','markersize',marker_size);
-
-
-semilogy([temp_p_tempPoints_ig(1),temp_p_tempPoints_ig(end)],...
-    [sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,1)/1000,...
-    sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,end)/1000]...
-    ,'gp','markersize',12);
-hold on
-semilogy(locsValue,peaks,'gp','markersize',12);
-hold on
-semilogy(locsValue2,-peaks2,'gp','markersize',12);
-
-legend('baseline','k=2','k=1','extreme points')
-xlabel('1000/T (1/K)')
-ylabel('Ignition Delay Time (ms)')
-
-
-
-
-subplot(1,2,2);
-plot(temp_p_tempPoints_ig,sensitivity.(pressure_text{m}).(classnumb_text{k}).Sig,'k^-','markersize',marker_size);
-ylim([-25 25])
-hold on
-% figure
-plot(temp_p_tempPoints_gr,sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr,'ko-','markersize',marker_size);
-
-ylim([-30 25])
-xlabel('1000/T (1/K)')
-ylabel('Ignition Delay Time (ms)')
-legend('ignition delay sensitivity','gradient sensitivity')
-
-annotation(h,'textbox',[0.213 0.38 0.279 0.05],...
-    'String',{fuel_name{1},...
-     '/Air',classnumb_text{k}, '\phi=1',pressure_text{m}},...
-    'FontSize',13,...
-    'FontName','Arial',...
-    'FitBoxToText','off',...
-    'LineStyle','none');
-
-% location_save=[currentloc,'\',mechanism{1},'\',directory];
-% cd(location_save)
-
-mkdir('sensitivity');
-cd('sensitivity');
-saveas(h,classnumb_text{k},'fig')
-saveas(h,classnumb_text{k},'jpg')
-cd ../
-end
-end
+% for m = 1 : numbOfPressure
+% for k = 1 : numbOfClass
+% h=figure('position',[20 50 1200 480]);
+% subplot(1,2,1);
+% set(gca,'Fontsize',13)
+% semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,:)/1000,'k-','markersize',marker_size);
+% hold on
+% semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(2,:)/1000,'rs-','markersize',marker_size);
+% hold on
+% semilogy(temp,sensitivity.(pressure_text{m}).(classnumb_text{k}).data(3,:)/1000,'bx-','markersize',marker_size);
+% 
+% 
+% semilogy([temp_p_tempPoints_ig(1),temp_p_tempPoints_ig(end)],...
+%     [sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,1)/1000,...
+%     sensitivity.(pressure_text{m}).(classnumb_text{k}).data(1,end)/1000]...
+%     ,'gp','markersize',12);
+% hold on
+% semilogy(locsValue,peaks,'gp','markersize',12);
+% hold on
+% semilogy(locsValue2,-peaks2,'gp','markersize',12);
+% 
+% legend('baseline','k=2','k=1','extreme points')
+% xlabel('1000/T (1/K)')
+% ylabel('Ignition Delay Time (ms)')
+% 
+% 
+% 
+% 
+% subplot(1,2,2);
+% plot(temp_p_tempPoints_ig,sensitivity.(pressure_text{m}).(classnumb_text{k}).Sig,'k^-','markersize',marker_size);
+% ylim([-25 25])
+% hold on
+% % figure
+% plot(temp_p_tempPoints_gr,sensitivity.(pressure_text{m}).(classnumb_text{k}).Sgr,'ko-','markersize',marker_size);
+% 
+% ylim([-30 25])
+% xlabel('1000/T (1/K)')
+% ylabel('Ignition Delay Time (ms)')
+% legend('ignition delay sensitivity','gradient sensitivity')
+% 
+% annotation(h,'textbox',[0.213 0.38 0.279 0.05],...
+%     'String',{fuel_name{1},...
+%      '/Air',classnumb_text{k}, '\phi=1',pressure_text{m}},...
+%     'FontSize',13,...
+%     'FontName','Arial',...
+%     'FitBoxToText','off',...
+%     'LineStyle','none');
+% 
+% % location_save=[currentloc,'\',mechanism{1},'\',directory];
+% % cd(location_save)
+% 
+% mkdir('sensitivity');
+% cd('sensitivity');
+% saveas(h,classnumb_text{k},'fig')
+% saveas(h,classnumb_text{k},'jpg')
+% cd ../
+% end
+% end
