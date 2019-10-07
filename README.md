@@ -1,5 +1,5 @@
-# JPoptimization_github
-Chemical MechanismsOptimizer5/08/2017 Jordan Lee (unghee@umich.edu)1
+# Chemical Mechanisms Optimizer
+5/08/2017 Jordan Lee (unghee@umich.edu)1
 #About Mechanisms Optimizer  
 The  optimizer  optimizes  reaction  rate  parameters(pre-exponential  and  activation energyterms)  in  the  selected  reactions  in  the chemicalmechanism in Chemkin  format.  The optimizerruns  in  MATLAB  framework. Chemkin  homogeneous  reactor  simulationsare  usedto calculate 0-D ignition delay time.
 
